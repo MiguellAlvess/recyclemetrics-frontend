@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ----------------------------------------
-   Fontes Poppins — todas as variações
------------------------------------------*/
-
 @font-face {
   font-family: 'Poppins';
   src: url('/src/assets/fonts/Poppins-Thin.ttf') format('truetype');
@@ -174,7 +170,6 @@
 
     --radius: 0.5rem;
 
-    /* Sidebar */
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 214 20% 30%;
     --sidebar-primary: 161 50% 47%;
