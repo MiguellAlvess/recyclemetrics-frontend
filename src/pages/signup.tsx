@@ -5,6 +5,7 @@ import { Link } from 'react-router'
 import { toast } from 'sonner'
 import z from 'zod'
 
+import { UserService } from '@/api/services/user'
 import signupImage from '@/assets/images/signup-page-image.svg'
 import PasswordInput from '@/components/password-input'
 import { Button } from '@/components/ui/button'
@@ -25,7 +26,6 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { api } from '@/lib/axios'
 
 const signupSchema = z
   .object({
@@ -66,12 +66,12 @@ const SignupPage = () => {
   const signupMutation = useMutation({
     mutationKey: ['signup'],
     mutationFn: async (data: z.infer<typeof signupSchema>) => {
-      const response = await api.post('/users', {
+      const response = await UserService.signup({
         name: data.name,
         email: data.email,
         password: data.password,
       })
-      return response.data
+      return response
     },
   })
 
