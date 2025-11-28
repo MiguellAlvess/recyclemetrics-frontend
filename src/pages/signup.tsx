@@ -1,6 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router'
+import { toast } from 'sonner'
 import z from 'zod'
 
 import signupImage from '@/assets/images/signup-page-image.svg'
@@ -23,26 +25,32 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { api } from '@/lib/axios'
 
-const signupSchema = z.object({
-  name: z.string().trim().min(1, {
-    message: 'Nome é obrigatório',
-  }),
-  email: z
-    .string()
-    .email({
-      message: 'Email inválido',
-    })
-    .min(1, {
-      message: 'Email é obrigatório',
+const signupSchema = z
+  .object({
+    name: z.string().trim().min(1, {
+      message: 'Nome é obrigatório',
     }),
-  password: z.string().trim().min(8, {
-    message: 'Senha deve ter no mínimo 8 caracteres',
-  }),
-  confirmPassword: z.string().trim().min(8, {
-    message: 'Confirmação de senha deve ser igual a senha',
-  }),
-})
+    email: z
+      .string()
+      .email({
+        message: 'Email inválido',
+      })
+      .min(1, {
+        message: 'Email é obrigatório',
+      }),
+    password: z.string().trim().min(8, {
+      message: 'Senha deve ter no mínimo 8 caracteres',
+    }),
+    passwordConfirmation: z.string().trim().min(8, {
+      message: 'Confirmação deve ter no mínimo 8 caracteres',
+    }),
+  })
+  .refine((data) => data.password === data.passwordConfirmation, {
+    message: 'Senhas não conferem',
+    path: ['passwordConfirmation'],
+  })
 
 const SignupPage = () => {
   const form = useForm<z.infer<typeof signupSchema>>({
@@ -51,12 +59,33 @@ const SignupPage = () => {
       name: '',
       email: '',
       password: '',
-      confirmPassword: '',
+      passwordConfirmation: '',
+    },
+  })
+
+  const signupMutation = useMutation({
+    mutationKey: ['signup'],
+    mutationFn: async (data: z.infer<typeof signupSchema>) => {
+      const response = await api.post('/users', {
+        name: data.name,
+        email: data.email,
+        password: data.password,
+      })
+      return response.data
     },
   })
 
   const handleSubmit = (data: z.infer<typeof signupSchema>) => {
-    console.log(data)
+    signupMutation.mutate(data, {
+      onSuccess: () => {
+        toast.success('Conta criada com sucesso!')
+        form.reset()
+      },
+      onError: (error) => {
+        toast.error('Erro ao criar conta')
+        console.log(error)
+      },
+    })
   }
   return (
     <div className="flex min-h-screen w-full">
@@ -115,7 +144,7 @@ const SignupPage = () => {
                 />
                 <FormField
                   control={form.control}
-                  name="confirmPassword"
+                  name="passwordConfirmation"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Confirme sua senha</FormLabel>
