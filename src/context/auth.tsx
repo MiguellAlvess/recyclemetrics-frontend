@@ -1,5 +1,11 @@
 import { useMutation } from '@tanstack/react-query'
-import { createContext, type ReactNode, useEffect, useState } from 'react'
+import {
+  createContext,
+  type ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
 import { toast } from 'sonner'
 
 import { UserService } from '@/api/services/user'
@@ -7,18 +13,7 @@ import { api } from '@/lib/axios'
 import type { LoginSchema } from '@/pages/login'
 import type { SignupSchema } from '@/pages/signup'
 
-export type AuthUser = {
-  userId: number
-  name: string
-  email: string
-}
-
-export type AuthContextData = {
-  user: AuthUser | null
-  login: (data: LoginSchema) => Promise<void>
-  signup: (data: SignupSchema) => Promise<void>
-  logout: () => void
-}
+import type { AuthContextData, AuthUser } from './types'
 
 export const AuthContext = createContext<AuthContextData>({
   user: null,
@@ -26,6 +21,16 @@ export const AuthContext = createContext<AuthContextData>({
   signup: async () => {},
   logout: () => {},
 })
+
+export const useAuthContext = () => useContext(AuthContext)
+
+const setAccessToken = (accessToken: string) => {
+  localStorage.setItem('accessToken', accessToken)
+}
+
+const removeAccessToken = () => {
+  localStorage.removeItem('accessToken')
+}
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<AuthUser | null>(null)
@@ -72,26 +77,29 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
   const signup = async (data: SignupSchema) => {
     signupMutation.mutate(data, {
-      onSuccess: (response) => {
-        localStorage.setItem('accessToken', response.accessToken)
-        setUser(response.user)
+      onSuccess: (createdUser) => {
+        setAccessToken(createdUser.accessToken)
+        setUser(createdUser.user)
         toast.success('Conta criada com sucesso!')
       },
       onError: () => {
+        removeAccessToken()
         toast.error('Erro ao criar conta')
+        console.log(signupMutation.error)
       },
     })
   }
 
   const login = async (data: LoginSchema) => {
     loginMutation.mutate(data, {
-      onSuccess: (response) => {
-        const accessToken = response.accessToken
-        localStorage.setItem('accessToken', accessToken)
-        setUser(response.user)
+      onSuccess: (loggedUser) => {
+        const accessToken = loggedUser.accessToken
+        setAccessToken(accessToken)
+        setUser(loggedUser.user)
         toast.success('Login realizado com sucesso!')
       },
       onError: (error) => {
+        removeAccessToken()
         toast.error('Email ou senha inválidos')
         console.log(error)
       },
@@ -106,7 +114,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         signup,
         logout: () => {
           setUser(null)
-          localStorage.removeItem('accessToken')
+          removeAccessToken()
         },
       }}
     >
