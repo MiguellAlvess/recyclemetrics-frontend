@@ -67,11 +67,11 @@ const SignupPage = () => {
   })
   const signupMutation = useMutation({
     mutationKey: ['signup'],
-    mutationFn: async (data: z.infer<typeof signupSchema>) => {
+    mutationFn: async (variables: z.infer<typeof signupSchema>) => {
       return UserService.signup({
-        name: data.name,
-        email: data.email,
-        password: data.password,
+        name: variables.name,
+        email: variables.email,
+        password: variables.password,
       })
     },
   })
