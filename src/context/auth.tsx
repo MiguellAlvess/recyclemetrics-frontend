@@ -1,4 +1,3 @@
-import { useMutation } from '@tanstack/react-query'
 import {
   createContext,
   type ReactNode,
@@ -8,6 +7,7 @@ import {
 } from 'react'
 import { toast } from 'sonner'
 
+import { useLoginMutation, useSignup } from '@/api/hooks/user'
 import { UserService } from '@/api/services/user/user'
 import { LOCAL_STORAGE_ACCESS_TOKEN_KEY } from '@/constants/local-storage'
 import type { LoginSchema } from '@/pages/login'
@@ -36,27 +36,8 @@ const removeAccessToken = () => {
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<AuthUser | null>(null)
   const [isInitializing, setInitializing] = useState(true)
-
-  const signupMutation = useMutation({
-    mutationKey: ['signup'],
-    mutationFn: async (variables: SignupSchema) => {
-      return UserService.signup({
-        name: variables.name,
-        email: variables.email,
-        password: variables.password,
-      })
-    },
-  })
-
-  const loginMutation = useMutation({
-    mutationKey: ['login'],
-    mutationFn: async (variables: LoginSchema) => {
-      return UserService.login({
-        email: variables.email,
-        password: variables.password,
-      })
-    },
-  })
+  const signupMutation = useSignup()
+  const loginMutation = useLoginMutation()
 
   useEffect(() => {
     const init = async () => {
