@@ -9,6 +9,7 @@ import {
 import { toast } from 'sonner'
 
 import { UserService } from '@/api/services/user'
+import { LOCAL_STORAGE_ACCESS_TOKEN_KEY } from '@/constants/local-storage'
 import { api } from '@/lib/axios'
 import type { LoginSchema } from '@/pages/login'
 import type { SignupSchema } from '@/pages/signup'
@@ -26,11 +27,11 @@ export const AuthContext = createContext<AuthContextData>({
 export const useAuthContext = () => useContext(AuthContext)
 
 const setAccessToken = (accessToken: string) => {
-  localStorage.setItem('accessToken', accessToken)
+  localStorage.setItem(LOCAL_STORAGE_ACCESS_TOKEN_KEY, accessToken)
 }
 
 const removeAccessToken = () => {
-  localStorage.removeItem('accessToken')
+  localStorage.removeItem(LOCAL_STORAGE_ACCESS_TOKEN_KEY)
 }
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
@@ -64,11 +65,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         setInitializing(true)
         const acccessToken = localStorage.getItem('accessToken')
         if (!acccessToken) return
-        const response = await api.get('/users/me', {
-          headers: {
-            Authorization: `Bearer ${acccessToken}`,
-          },
-        })
+        const response = await api.get('/users/me')
         setUser(response.data)
       } catch (error) {
         setUser(null)
