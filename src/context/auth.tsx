@@ -113,17 +113,19 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     })
   }
 
+  const logout = () => {
+    setUser(null)
+    removeAccessToken()
+  }
+
   return (
     <AuthContext.Provider
       value={{
         user,
         isInitializing,
         login: login,
-        signup,
-        logout: () => {
-          setUser(null)
-          removeAccessToken()
-        },
+        signup: signup,
+        logout: logout,
       }}
     >
       {children}

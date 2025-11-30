@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router'
+import { Link, Navigate } from 'react-router'
 import { z } from 'zod'
 
 import signupImage from '@/assets/images/signup-page-image.svg'
@@ -53,7 +53,7 @@ const LoginPage = () => {
 
   if (isInitializing) return null
   if (user) {
-    ;<h1>Olá, {user.name} vocé tem uma conta</h1>
+    return <Navigate to="/dashboard" />
   }
 
   return (
