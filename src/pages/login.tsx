@@ -38,7 +38,7 @@ const loginSchema = z.object({
 export type LoginSchema = z.infer<typeof loginSchema>
 
 const LoginPage = () => {
-  const { user, login } = useAuthContext()
+  const { user, login, isInitializing } = useAuthContext()
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -51,7 +51,10 @@ const LoginPage = () => {
     login(data)
   }
 
-  if (user) return <h1>Olá, {user.name} você tem uma conta</h1>
+  if (isInitializing) return null
+  if (user) {
+    ;<h1>Olá, {user.name} vocé tem uma conta</h1>
+  }
 
   return (
     <div className="flex min-h-screen w-full">

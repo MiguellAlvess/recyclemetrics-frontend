@@ -9,6 +9,7 @@ export type AuthUser = {
 
 export type AuthContextData = {
   user: AuthUser | null
+  isInitializing: boolean
   login: (data: LoginSchema) => Promise<void>
   signup: (data: SignupSchema) => Promise<void>
   logout: () => void

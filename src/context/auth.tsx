@@ -17,6 +17,7 @@ import type { AuthContextData, AuthUser } from './types'
 
 export const AuthContext = createContext<AuthContextData>({
   user: null,
+  isInitializing: true,
   login: async () => {},
   signup: async () => {},
   logout: () => {},
@@ -34,6 +35,7 @@ const removeAccessToken = () => {
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<AuthUser | null>(null)
+  const [isInitializing, setInitializing] = useState(true)
 
   const signupMutation = useMutation({
     mutationKey: ['signup'],
@@ -59,6 +61,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const init = async () => {
       try {
+        setInitializing(true)
         const acccessToken = localStorage.getItem('accessToken')
         if (!acccessToken) return
         const response = await api.get('/users/me', {
@@ -68,7 +71,11 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         })
         setUser(response.data)
       } catch (error) {
+        setUser(null)
+        removeAccessToken()
         console.error(error)
+      } finally {
+        setInitializing(false)
       }
     }
 
@@ -110,6 +117,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     <AuthContext.Provider
       value={{
         user,
+        isInitializing,
         login: login,
         signup,
         logout: () => {
