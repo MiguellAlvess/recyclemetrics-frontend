@@ -1,11 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router'
 import { toast } from 'sonner'
 import z from 'zod'
 
-import { UserService } from '@/api/services/user'
+import { type AuthResponse, UserService } from '@/api/services/user'
 import signupImage from '@/assets/images/signup-page-image.svg'
 import PasswordInput from '@/components/password-input'
 import { Button } from '@/components/ui/button'
@@ -53,6 +54,7 @@ const signupSchema = z
   })
 
 const SignupPage = () => {
+  const [user, setUser] = useState<AuthResponse['user'] | null>(null)
   const form = useForm<z.infer<typeof signupSchema>>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
@@ -62,22 +64,23 @@ const SignupPage = () => {
       passwordConfirmation: '',
     },
   })
-
   const signupMutation = useMutation({
     mutationKey: ['signup'],
     mutationFn: async (data: z.infer<typeof signupSchema>) => {
-      const response = await UserService.signup({
+      return UserService.signup({
         name: data.name,
         email: data.email,
         password: data.password,
       })
-      return response
     },
   })
 
   const handleSubmit = (data: z.infer<typeof signupSchema>) => {
     signupMutation.mutate(data, {
-      onSuccess: () => {
+      onSuccess: (response: AuthResponse) => {
+        const accessToken = response.accessToken
+        localStorage.setItem('accessToken', accessToken)
+        setUser(response.user)
         toast.success('Conta criada com sucesso!')
         form.reset()
       },
@@ -86,6 +89,9 @@ const SignupPage = () => {
         console.log(error)
       },
     })
+  }
+  if (user) {
+    return <h1>Olá, {user.name} você tem uma conta</h1>
   }
   return (
     <div className="flex min-h-screen w-full">
