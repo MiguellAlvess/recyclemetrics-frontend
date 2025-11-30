@@ -2,8 +2,9 @@ import { useMutation } from '@tanstack/react-query'
 import { createContext, type ReactNode, useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
-import { type AuthResponse, UserService } from '@/api/services/user'
+import { UserService } from '@/api/services/user'
 import { api } from '@/lib/axios'
+import type { LoginSchema } from '@/pages/login'
 import type { SignupSchema } from '@/pages/signup'
 
 export type AuthUser = {
@@ -14,7 +15,7 @@ export type AuthUser = {
 
 export type AuthContextData = {
   user: AuthUser | null
-  login: (email: string, password: string) => Promise<void>
+  login: (data: LoginSchema) => Promise<void>
   signup: (data: SignupSchema) => Promise<void>
   logout: () => void
 }
@@ -29,11 +30,21 @@ export const AuthContext = createContext<AuthContextData>({
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<AuthUser | null>(null)
 
-  const signupMutation = useMutation<AuthResponse, unknown, SignupSchema>({
+  const signupMutation = useMutation({
     mutationKey: ['signup'],
-    mutationFn: async (variables) => {
+    mutationFn: async (variables: SignupSchema) => {
       return UserService.signup({
         name: variables.name,
+        email: variables.email,
+        password: variables.password,
+      })
+    },
+  })
+
+  const loginMutation = useMutation({
+    mutationKey: ['login'],
+    mutationFn: async (variables: LoginSchema) => {
+      return UserService.login({
         email: variables.email,
         password: variables.password,
       })
@@ -45,13 +56,11 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
       try {
         const acccessToken = localStorage.getItem('accessToken')
         if (!acccessToken) return
-
-        const response = await api.get<AuthUser>('/users/me', {
+        const response = await api.get('/users/me', {
           headers: {
             Authorization: `Bearer ${acccessToken}`,
           },
         })
-
         setUser(response.data)
       } catch (error) {
         console.error(error)
@@ -74,11 +83,26 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     })
   }
 
+  const login = async (data: LoginSchema) => {
+    loginMutation.mutate(data, {
+      onSuccess: (response) => {
+        const accessToken = response.accessToken
+        localStorage.setItem('accessToken', accessToken)
+        setUser(response.user)
+        toast.success('Login realizado com sucesso!')
+      },
+      onError: (error) => {
+        toast.error('Email ou senha inválidos')
+        console.log(error)
+      },
+    })
+  }
+
   return (
     <AuthContext.Provider
       value={{
         user,
-        login: async () => {},
+        login: login,
         signup,
         logout: () => {
           setUser(null)
