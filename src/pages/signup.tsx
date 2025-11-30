@@ -1,12 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router'
-import { toast } from 'sonner'
 import z from 'zod'
 
-import { type AuthResponse, UserService } from '@/api/services/user'
 import signupImage from '@/assets/images/signup-page-image.svg'
 import PasswordInput from '@/components/password-input'
 import { Button } from '@/components/ui/button'
@@ -27,7 +24,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { api } from '@/lib/axios'
+import { AuthContext } from '@/context/auth'
 
 const signupSchema = z
   .object({
@@ -54,8 +51,10 @@ const signupSchema = z
     path: ['passwordConfirmation'],
   })
 
+export type SignupSchema = z.infer<typeof signupSchema>
+
 const SignupPage = () => {
-  const [user, setUser] = useState<AuthResponse['user'] | null>(null)
+  const { user, signup } = useContext(AuthContext)
   const form = useForm<z.infer<typeof signupSchema>>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
@@ -65,53 +64,14 @@ const SignupPage = () => {
       passwordConfirmation: '',
     },
   })
-  const signupMutation = useMutation({
-    mutationKey: ['signup'],
-    mutationFn: async (variables: z.infer<typeof signupSchema>) => {
-      return UserService.signup({
-        name: variables.name,
-        email: variables.email,
-        password: variables.password,
-      })
-    },
-  })
-
-  useEffect(() => {
-    const init = async () => {
-      try {
-        const acccessToken = localStorage.getItem('accessToken')
-        if (!acccessToken) return
-        const response = await api.get('/users/me', {
-          headers: {
-            Authorization: `Bearer ${acccessToken}`,
-          },
-        })
-        setUser(response.data)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    init()
-  }, [])
-
   const handleSubmit = (data: z.infer<typeof signupSchema>) => {
-    signupMutation.mutate(data, {
-      onSuccess: (response: AuthResponse) => {
-        const accessToken = response.accessToken
-        localStorage.setItem('accessToken', accessToken)
-        setUser(response.user)
-        toast.success('Conta criada com sucesso!')
-        form.reset()
-      },
-      onError: (error) => {
-        toast.error('Erro ao criar conta')
-        console.log(error)
-      },
-    })
+    signup(data)
   }
+
   if (user) {
     return <h1>Olá, {user.name} você tem uma conta</h1>
   }
+
   return (
     <div className="flex min-h-screen w-full">
       <div className="flex w-full items-center justify-center px-4 md:w-1/2">
