@@ -8,9 +8,8 @@ import {
 } from 'react'
 import { toast } from 'sonner'
 
-import { UserService } from '@/api/services/user'
+import { UserService } from '@/api/services/user/user'
 import { LOCAL_STORAGE_ACCESS_TOKEN_KEY } from '@/constants/local-storage'
-import { api } from '@/lib/axios'
 import type { LoginSchema } from '@/pages/login'
 import type { SignupSchema } from '@/pages/signup'
 
@@ -65,8 +64,8 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         setInitializing(true)
         const acccessToken = localStorage.getItem('accessToken')
         if (!acccessToken) return
-        const response = await api.get('/users/me')
-        setUser(response.data)
+        const user = await UserService.me()
+        setUser(user)
       } catch (error) {
         setUser(null)
         removeAccessToken()
