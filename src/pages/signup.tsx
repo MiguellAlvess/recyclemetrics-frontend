@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router'
 import { toast } from 'sonner'
@@ -27,6 +27,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { api } from '@/lib/axios'
 
 const signupSchema = z
   .object({
@@ -74,6 +75,24 @@ const SignupPage = () => {
       })
     },
   })
+
+  useEffect(() => {
+    const init = async () => {
+      try {
+        const acccessToken = localStorage.getItem('accessToken')
+        if (!acccessToken) return
+        const response = await api.get('/users/me', {
+          headers: {
+            Authorization: `Bearer ${acccessToken}`,
+          },
+        })
+        setUser(response.data)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    init()
+  }, [])
 
   const handleSubmit = (data: z.infer<typeof signupSchema>) => {
     signupMutation.mutate(data, {
