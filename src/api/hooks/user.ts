@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 
-import type { LoginSchema } from '@/pages/login'
+import type { LoginSchema } from '@/forms/schemas/user'
 import type { SignupSchema } from '@/pages/signup'
 
 import { UserService } from '../services/user/user'

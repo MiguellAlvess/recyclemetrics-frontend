@@ -1,7 +1,5 @@
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
+import { Loader2Icon } from 'lucide-react'
 import { Link, Navigate } from 'react-router'
-import { z } from 'zod'
 
 import signupImage from '@/assets/images/signup-page-image.svg'
 import PasswordInput from '@/components/password-input'
@@ -24,38 +22,19 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { useAuthContext } from '@/context/auth'
-
-const loginSchema = z.object({
-  email: z
-    .string()
-    .email({ message: 'Email inválido' })
-    .min(1, { message: 'Email é obrigatório' }),
-  password: z.string().min(8, {
-    message: 'Senha deve ter no mínimo 8 caracteres',
-  }),
-})
-
-export type LoginSchema = z.infer<typeof loginSchema>
+import { useLoginForm } from '@/forms/hooks/user'
+import type { LoginSchema } from '@/forms/schemas/user'
 
 const LoginPage = () => {
   const { user, login, isInitializing } = useAuthContext()
-  const form = useForm<z.infer<typeof loginSchema>>({
-    resolver: zodResolver(loginSchema),
-    defaultValues: {
-      email: '',
-      password: '',
-    },
-  })
-
-  const handleSubmit = (data: z.infer<typeof loginSchema>) => {
-    login(data)
+  const { form } = useLoginForm()
+  const handleSubmit = async (data: LoginSchema) => {
+    await login(data)
   }
-
   if (isInitializing) return null
   if (user) {
     return <Navigate to="/dashboard" />
   }
-
   return (
     <div className="flex min-h-screen w-full">
       <div className="flex w-full items-center justify-center px-4 md:w-1/2 md:justify-end md:pr-10 lg:pr-16">
@@ -101,7 +80,14 @@ const LoginPage = () => {
                 />
               </CardContent>
               <CardFooter className="flex flex-col gap-2">
-                <Button type="submit" className="w-full">
+                <Button
+                  type="submit"
+                  className="w-full"
+                  disabled={form.formState.isSubmitting}
+                >
+                  {form.formState.isSubmitting && (
+                    <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
+                  )}
                   Entrar
                 </Button>
                 <div className="flex items-center justify-center text-sm">

@@ -10,7 +10,7 @@ import { toast } from 'sonner'
 import { useLoginMutation, useSignup } from '@/api/hooks/user'
 import { UserService } from '@/api/services/user/user'
 import { LOCAL_STORAGE_ACCESS_TOKEN_KEY } from '@/constants/local-storage'
-import type { LoginSchema } from '@/pages/login'
+import type { LoginSchema } from '@/forms/schemas/user'
 import type { SignupSchema } from '@/pages/signup'
 
 import type { AuthContextData, AuthUser } from './types'
@@ -75,19 +75,17 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   }
 
   const login = async (data: LoginSchema) => {
-    loginMutation.mutate(data, {
-      onSuccess: (loggedUser) => {
-        const accessToken = loggedUser.accessToken
-        setAccessToken(accessToken)
-        setUser(loggedUser.user)
-        toast.success('Login realizado com sucesso!')
-      },
-      onError: (error) => {
-        removeAccessToken()
-        toast.error('Email ou senha inválidos')
-        console.log(error)
-      },
-    })
+    try {
+      const loggedUser = await loginMutation.mutateAsync(data)
+      const accessToken = loggedUser.accessToken
+      setAccessToken(accessToken)
+      setUser(loggedUser.user)
+      toast.success('Login realizado com sucesso!')
+    } catch (error) {
+      removeAccessToken()
+      toast.error('Erro ao realizar login')
+      console.error(error)
+    }
   }
 
   const logout = () => {
