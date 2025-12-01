@@ -1,5 +1,4 @@
 import {
-  Gem,
   LayoutDashboard,
   LogOut,
   RecycleIcon,
@@ -7,6 +6,7 @@ import {
 } from 'lucide-react'
 import { Link, useLocation } from 'react-router-dom'
 
+import logo from '@/assets/images/logo.svg'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import {
   DropdownMenu,
@@ -36,8 +36,8 @@ const items = [
     icon: LayoutDashboard,
   },
   {
-    title: 'Resíduos',
-    url: '/residues',
+    title: 'Descartes',
+    url: '/diposals',
     icon: RecycleIcon,
   },
   {
@@ -54,7 +54,11 @@ const AppSidebar = () => {
   return (
     <Sidebar>
       <SidebarHeader className="border-b p-4">
-        <img src="/logo.svg" alt="RecycleMetrics" width={136} height={28} />
+        <img
+          src={logo}
+          alt="Reciclagem"
+          className="h-full w-full object-cover"
+        />
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
@@ -71,24 +75,6 @@ const AppSidebar = () => {
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-        <SidebarGroup>
-          <SidebarGroupLabel>Outros</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton
-                  asChild
-                  isActive={pathname === '/subscription'}
-                >
-                  <Link to="/subscription">
-                    <Gem className="h-4 w-4" />
-                    <span>Assinatura</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
