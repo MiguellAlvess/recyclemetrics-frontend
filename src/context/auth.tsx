@@ -42,7 +42,9 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     const init = async () => {
       try {
         setInitializing(true)
-        const acccessToken = localStorage.getItem('accessToken')
+        const acccessToken = localStorage.getItem(
+          LOCAL_STORAGE_ACCESS_TOKEN_KEY
+        )
         if (!acccessToken) return
         const user = await UserService.me()
         setUser(user)
