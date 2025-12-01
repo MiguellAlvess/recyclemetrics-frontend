@@ -1,7 +1,5 @@
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
+import { Loader2Icon } from 'lucide-react'
 import { Link, Navigate } from 'react-router'
-import z from 'zod'
 
 import signupImage from '@/assets/images/signup-page-image.svg'
 import PasswordInput from '@/components/password-input'
@@ -24,47 +22,14 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { useAuthContext } from '@/context/auth'
-
-const signupSchema = z
-  .object({
-    name: z.string().trim().min(1, {
-      message: 'Nome é obrigatório',
-    }),
-    email: z
-      .string()
-      .email({
-        message: 'Email inválido',
-      })
-      .min(1, {
-        message: 'Email é obrigatório',
-      }),
-    password: z.string().trim().min(8, {
-      message: 'Senha deve ter no mínimo 8 caracteres',
-    }),
-    passwordConfirmation: z.string().trim().min(8, {
-      message: 'Confirmação deve ter no mínimo 8 caracteres',
-    }),
-  })
-  .refine((data) => data.password === data.passwordConfirmation, {
-    message: 'Senhas não conferem',
-    path: ['passwordConfirmation'],
-  })
-
-export type SignupSchema = z.infer<typeof signupSchema>
+import { useSignupForm } from '@/forms/hooks/user'
+import type { SignupSchema } from '@/forms/schemas/user'
 
 const SignupPage = () => {
   const { user, signup, isInitializing } = useAuthContext()
-  const form = useForm<z.infer<typeof signupSchema>>({
-    resolver: zodResolver(signupSchema),
-    defaultValues: {
-      name: '',
-      email: '',
-      password: '',
-      passwordConfirmation: '',
-    },
-  })
-  const handleSubmit = (data: z.infer<typeof signupSchema>) => {
-    signup(data)
+  const { form } = useSignupForm()
+  const handleSubmit = async (data: SignupSchema) => {
+    await signup(data)
   }
 
   if (isInitializing) return null
@@ -145,7 +110,14 @@ const SignupPage = () => {
                 />
               </CardContent>
               <CardFooter className="flex flex-col gap-2">
-                <Button type="submit" className="w-full">
+                <Button
+                  type="submit"
+                  className="w-full"
+                  disabled={form.formState.isSubmitting}
+                >
+                  {form.formState.isSubmitting && (
+                    <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
+                  )}
                   Criar conta
                 </Button>
                 <div className="flex items-center justify-center text-sm">

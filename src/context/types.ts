@@ -1,5 +1,4 @@
-import type { LoginSchema } from '@/forms/schemas/user'
-import type { SignupSchema } from '@/pages/signup'
+import type { LoginSchema, SignupSchema } from '@/forms/schemas/user'
 
 export type AuthUser = {
   userId: number

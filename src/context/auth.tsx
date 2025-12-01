@@ -10,8 +10,7 @@ import { toast } from 'sonner'
 import { useLoginMutation, useSignup } from '@/api/hooks/user'
 import { UserService } from '@/api/services/user/user'
 import { LOCAL_STORAGE_ACCESS_TOKEN_KEY } from '@/constants/local-storage'
-import type { LoginSchema } from '@/forms/schemas/user'
-import type { SignupSchema } from '@/pages/signup'
+import type { LoginSchema, SignupSchema } from '@/forms/schemas/user'
 
 import type { AuthContextData, AuthUser } from './types'
 
@@ -60,18 +59,16 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   }, [])
 
   const signup = async (data: SignupSchema) => {
-    signupMutation.mutate(data, {
-      onSuccess: (createdUser) => {
-        setAccessToken(createdUser.accessToken)
-        setUser(createdUser.user)
-        toast.success('Conta criada com sucesso!')
-      },
-      onError: () => {
-        removeAccessToken()
-        toast.error('Erro ao criar conta')
-        console.log(signupMutation.error)
-      },
-    })
+    try {
+      const createdUser = await signupMutation.mutateAsync(data)
+      const accessToken = createdUser.accessToken
+      setAccessToken(accessToken)
+      setUser(createdUser.user)
+    } catch (error) {
+      console.error(error)
+      toast.error('Erro ao realizar login')
+      removeAccessToken()
+    }
   }
 
   const login = async (data: LoginSchema) => {
