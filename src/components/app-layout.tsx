@@ -7,7 +7,7 @@ export const AppLayout = () => {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main className="flex-1">
+      <main className="w-full">
         <SidebarTrigger />
         <Outlet />
       </main>

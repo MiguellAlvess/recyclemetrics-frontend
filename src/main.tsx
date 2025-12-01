@@ -10,6 +10,7 @@ import { Toaster } from 'sonner'
 import { AppLayout } from './components/app-layout'
 import { AuthContextProvider } from './context/auth'
 import DashboardPage from './pages/dashboard'
+import DisposalsPage from './pages/disposals'
 import LoginPage from './pages/login'
 import NotFoundPage from './pages/notfound'
 import SignupPage from './pages/signup'
@@ -28,6 +29,7 @@ createRoot(document.getElementById('root')!).render(
             <Route element={<PrivateRoute />}>
               <Route element={<AppLayout />}>
                 <Route path="/dashboard" element={<DashboardPage />} />
+                <Route path="/disposals" element={<DisposalsPage />} />
               </Route>
             </Route>
 
