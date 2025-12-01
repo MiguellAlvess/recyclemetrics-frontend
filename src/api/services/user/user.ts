@@ -1,4 +1,4 @@
-import { publicApi } from '@/lib/axios'
+import { protectedApi, publicApi } from '@/lib/axios'
 
 import type { AuthResponse, User } from './types'
 
@@ -28,7 +28,7 @@ export const UserService = {
   },
 
   me: async (): Promise<User> => {
-    const response = await publicApi.get('/users/me')
+    const response = await protectedApi.get('/users/me')
     return response.data
   },
 }
