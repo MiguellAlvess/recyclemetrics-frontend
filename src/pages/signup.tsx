@@ -1,5 +1,5 @@
 import { Loader2Icon } from 'lucide-react'
-import { Link, Navigate } from 'react-router'
+import { Link, Navigate } from 'react-router-dom'
 
 import signupImage from '@/assets/images/signup-page-image.svg'
 import PasswordInput from '@/components/password-input'
