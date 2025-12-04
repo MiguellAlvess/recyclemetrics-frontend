@@ -1,5 +1,4 @@
-import { Plus } from 'lucide-react'
-
+import AddDisposalButton from '@/components/add-disposal-button'
 import {
   PageActions,
   PageContainer,
@@ -9,7 +8,6 @@ import {
   PageHeaderContent,
   PageTitle,
 } from '@/components/page-container'
-import { Button } from '@/components/ui/button'
 
 const DisposalsPage = () => {
   return (
@@ -22,10 +20,7 @@ const DisposalsPage = () => {
           </PageDescription>
         </PageHeaderContent>
         <PageActions>
-          <Button>
-            <Plus />
-            Adicionar descarte
-          </Button>
+          <AddDisposalButton />
         </PageActions>
       </PageHeader>
       <PageContent>Descartes</PageContent>
