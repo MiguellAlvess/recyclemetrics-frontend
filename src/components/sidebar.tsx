@@ -37,7 +37,7 @@ const items = [
   },
   {
     title: 'Descartes',
-    url: '/diposals',
+    url: '/disposals',
     icon: RecycleIcon,
   },
   {
