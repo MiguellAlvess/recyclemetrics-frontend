@@ -15,7 +15,6 @@ import {
 import { useState } from 'react'
 import { toast } from 'sonner'
 
-import { useCreateDisposal } from '@/api/hooks/disposal'
 import {
   Dialog,
   DialogClose,
@@ -27,7 +26,6 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { useCreateDisposalForm } from '@/forms/hooks/disposal'
-import type { CreateDisposalSchema } from '@/forms/schemas/disposal'
 
 import { EnumButtonGroup, type EnumOption } from './enum-button-group'
 import { Button } from './ui/button'
@@ -59,21 +57,16 @@ export const destinationOptions: EnumOption[] = [
 ]
 
 const AddDisposalButton = () => {
-  const { form } = useCreateDisposalForm()
   const [dialogIsOpen, setDialogIsOpen] = useState(false)
-  const { mutateAsync: createDisposal } = useCreateDisposal()
-
-  const handleSubmit = async (data: CreateDisposalSchema) => {
-    try {
-      await createDisposal(data)
-      toast.success('Descarte adicionado com sucesso!')
+  const { form, handleSubmit } = useCreateDisposalForm({
+    onSuccess: () => {
       setDialogIsOpen(false)
-      form.reset()
-    } catch (error) {
-      toast.error('Erro ao adicionar descarte. Tente novamente.')
-      console.error(error)
-    }
-  }
+      toast.success('Descarte adicionado com sucesso')
+    },
+    onError: () => {
+      toast.error('Erro ao adicionar descarte')
+    },
+  })
 
   return (
     <>
