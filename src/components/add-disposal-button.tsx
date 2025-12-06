@@ -1,4 +1,3 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
 import {
   Apple,
   CupSoda,
@@ -16,7 +15,7 @@ import {
 import { useState } from 'react'
 import { toast } from 'sonner'
 
-import { DisposalService } from '@/api/services/disposal/disposal'
+import { useCreateDisposal } from '@/api/hooks/disposal'
 import {
   Dialog,
   DialogClose,
@@ -62,14 +61,7 @@ export const destinationOptions: EnumOption[] = [
 const AddDisposalButton = () => {
   const { form } = useCreateDisposalForm()
   const [dialogIsOpen, setDialogIsOpen] = useState(false)
-  const queryClient = useQueryClient()
-  const { mutateAsync: createDisposal } = useMutation({
-    mutationKey: ['createDisposal'],
-    mutationFn: (data: CreateDisposalSchema) => DisposalService.create(data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['disposals'] })
-    },
-  })
+  const { mutateAsync: createDisposal } = useCreateDisposal()
 
   const handleSubmit = async (data: CreateDisposalSchema) => {
     try {
