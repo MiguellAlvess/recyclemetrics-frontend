@@ -1,10 +1,12 @@
 import type { ColumnDef } from '@tanstack/react-table'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale/pt-BR'
+import { ExternalLinkIcon } from 'lucide-react'
 
 import { useGetDisposals } from '@/api/hooks/disposal'
 import type { CreateDisposalResponse } from '@/api/services/disposal/types'
 
+import { Button } from './ui/button'
 import { DataTable } from './ui/data-table'
 
 type Disposal = CreateDisposalResponse
@@ -54,6 +56,13 @@ export const columns: ColumnDef<Disposal>[] = [
   {
     accessorKey: 'actions',
     header: 'Ações',
+    cell: () => {
+      return (
+        <Button variant="ghost" size="icon">
+          <ExternalLinkIcon />
+        </Button>
+      )
+    },
   },
 ]
 
