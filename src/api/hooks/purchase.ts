@@ -1,8 +1,9 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import type { CreatePurchaseSchema } from '@/forms/schemas/purchase'
 
 import { PurchaseService } from '../services/purchase/purchase'
+import type { CreatePurchaseResponse } from '../services/purchase/type'
 
 export const useCreatePurchase = () => {
   const queryClient = useQueryClient()
@@ -12,5 +13,12 @@ export const useCreatePurchase = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['purchases'] })
     },
+  })
+}
+
+export const useGetPurchases = () => {
+  return useQuery<CreatePurchaseResponse[]>({
+    queryKey: ['disposals'],
+    queryFn: () => PurchaseService.getAll(),
   })
 }

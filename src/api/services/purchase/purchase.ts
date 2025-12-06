@@ -9,4 +9,8 @@ export const PurchaseService = {
     const response = await protectedApi.post('/purchases', input)
     return response.data
   },
+  getAll: async (): Promise<CreatePurchaseResponse[]> => {
+    const response = await protectedApi.get('/purchases')
+    return response.data
+  },
 }
