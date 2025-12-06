@@ -13,4 +13,7 @@ export const PurchaseService = {
     const response = await protectedApi.get('/purchases')
     return response.data
   },
+  delete: async (purchaseId: number): Promise<void> => {
+    await protectedApi.delete(`/purchases/${purchaseId}`)
+  },
 }

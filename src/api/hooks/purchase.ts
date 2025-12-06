@@ -18,7 +18,20 @@ export const useCreatePurchase = () => {
 
 export const useGetPurchases = () => {
   return useQuery<CreatePurchaseResponse[]>({
-    queryKey: ['disposals'],
+    queryKey: ['purchases'],
     queryFn: () => PurchaseService.getAll(),
+  })
+}
+
+export const useDeletePurchase = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationKey: ['deleteDisposal'],
+    mutationFn: async (variables: { purchaseId: number }) => {
+      return PurchaseService.delete(variables.purchaseId)
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['purchases'] })
+    },
   })
 }
