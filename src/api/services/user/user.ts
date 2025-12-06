@@ -20,11 +20,8 @@ export const UserService = {
     return response.data
   },
 
-  update: async (
-    userId: number,
-    input: UpdateUserInput
-  ): Promise<UpdateUserResponse> => {
-    const response = await protectedApi.patch(`/users/${userId}`, input)
+  update: async (input: UpdateUserInput): Promise<UpdateUserResponse> => {
+    const response = await protectedApi.patch(`/users/${input.userId}`, input)
     return response.data
   },
 

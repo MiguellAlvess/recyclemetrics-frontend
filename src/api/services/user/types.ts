@@ -10,6 +10,7 @@ export type LoginInput = {
 }
 
 export type UpdateUserInput = {
+  userId: number
   name?: string
   email?: string
   password?: string
