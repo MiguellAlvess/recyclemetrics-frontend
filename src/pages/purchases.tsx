@@ -8,6 +8,7 @@ import {
   PageHeaderContent,
   PageTitle,
 } from '@/components/page-container'
+import PurchasesTable from '@/components/purchases-table'
 
 const PurchasesPage = () => {
   return (
@@ -24,7 +25,7 @@ const PurchasesPage = () => {
         </PageActions>
       </PageHeader>
       <PageContent>
-        <h1>Compras</h1>
+        <PurchasesTable />
       </PageContent>
     </PageContainer>
   )
