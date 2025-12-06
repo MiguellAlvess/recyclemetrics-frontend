@@ -1,6 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
-import type { CreatePurchaseSchema } from '@/forms/schemas/purchase'
+import type {
+  CreatePurchaseSchema,
+  EditPurchaseSchema,
+} from '@/forms/schemas/purchase'
 
 import { PurchaseService } from '../services/purchase/purchase'
 import type { CreatePurchaseResponse } from '../services/purchase/type'
@@ -16,10 +19,16 @@ export const useCreatePurchase = () => {
   })
 }
 
-export const useGetPurchases = () => {
-  return useQuery<CreatePurchaseResponse[]>({
-    queryKey: ['purchases'],
-    queryFn: () => PurchaseService.getAll(),
+export const useEditPurchase = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationKey: ['editPurchase'],
+    mutationFn: async (variables: EditPurchaseSchema) => {
+      return PurchaseService.update(variables)
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['purchases'] })
+    },
   })
 }
 
@@ -33,5 +42,12 @@ export const useDeletePurchase = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['purchases'] })
     },
+  })
+}
+
+export const useGetPurchases = () => {
+  return useQuery<CreatePurchaseResponse[]>({
+    queryKey: ['purchases'],
+    queryFn: () => PurchaseService.getAll(),
   })
 }

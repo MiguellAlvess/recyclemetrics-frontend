@@ -12,3 +12,13 @@ export type CreatePurchaseResponse = {
   quantity: number
   materialType: string
 }
+
+export type UpdatePurchaseInput = {
+  purchaseId: number
+  purchaseProduct: string
+  quantity: number
+  materialType: string
+  purchaseDate: Date
+}
+
+export type UpdatePurchaseResponse = CreatePurchaseResponse

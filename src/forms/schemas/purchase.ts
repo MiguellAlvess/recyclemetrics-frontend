@@ -17,3 +17,9 @@ export const createPurchaseSchema = z.object({
 })
 
 export type CreatePurchaseSchema = z.infer<typeof createPurchaseSchema>
+
+export const editPurchaseSchema = createPurchaseSchema.extend({
+  purchaseId: z.number(),
+})
+
+export type EditPurchaseSchema = z.infer<typeof editPurchaseSchema>
