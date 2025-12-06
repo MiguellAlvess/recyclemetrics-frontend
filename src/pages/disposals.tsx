@@ -1,4 +1,5 @@
 import AddDisposalButton from '@/components/add-disposal-button'
+import DisposalsTable from '@/components/disposals-table'
 import {
   PageActions,
   PageContainer,
@@ -24,6 +25,7 @@ const DisposalsPage = () => {
         </PageActions>
       </PageHeader>
       <PageContent>Descartes</PageContent>
+      <DisposalsTable />
     </PageContainer>
   )
 }
