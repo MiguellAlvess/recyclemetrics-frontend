@@ -13,6 +13,7 @@ import DashboardPage from './pages/dashboard'
 import DisposalsPage from './pages/disposals'
 import LoginPage from './pages/login'
 import NotFoundPage from './pages/notfound'
+import PurchasesPage from './pages/purchases'
 import SignupPage from './pages/signup'
 import { PrivateRoute } from './routes/private-routes'
 
@@ -30,6 +31,7 @@ createRoot(document.getElementById('root')!).render(
               <Route element={<AppLayout />}>
                 <Route path="/dashboard" element={<DashboardPage />} />
                 <Route path="/disposals" element={<DisposalsPage />} />
+                <Route path="/purchases" element={<PurchasesPage />} />
               </Route>
             </Route>
 
