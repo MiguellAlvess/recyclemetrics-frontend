@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import type { CreateDisposalSchema } from '@/forms/schemas/disposal'
 
@@ -12,5 +12,12 @@ export const useCreateDisposal = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['disposals'] })
     },
+  })
+}
+
+export const useGetDisposals = () => {
+  return useQuery({
+    queryKey: ['disposals'],
+    queryFn: () => DisposalService.getAll(),
   })
 }
