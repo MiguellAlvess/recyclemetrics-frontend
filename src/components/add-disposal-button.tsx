@@ -30,6 +30,7 @@ import {
 import { useCreateDisposalForm } from '@/forms/hooks/disposal'
 import type { CreateDisposalSchema } from '@/forms/schemas/disposal'
 
+import { EnumButtonGroup, type EnumOption } from './enum-button-group'
 import { Button } from './ui/button'
 import { DatePicker } from './ui/date-picker'
 import {
@@ -41,6 +42,22 @@ import {
   FormMessage,
 } from './ui/form'
 import { Input } from './ui/input'
+
+export const materialTypeOptions: EnumOption[] = [
+  { value: 'PLASTIC', label: 'Plástico', icon: <CupSoda /> },
+  { value: 'METAL', label: 'Metal', icon: <Weight /> },
+  { value: 'GLASS', label: 'Vidro', icon: <Wine /> },
+  { value: 'PAPER', label: 'Papel', icon: <StickyNote /> },
+  { value: 'ORGANIC', label: 'Orgânico', icon: <Apple /> },
+  { value: 'NOT_RECYCLABLE', label: 'Não reciclável', icon: <RefreshCwOff /> },
+]
+
+export const destinationOptions: EnumOption[] = [
+  { value: 'RECYCLING', label: 'Reciclagem', icon: <Recycle /> },
+  { value: 'COMPOSTING', label: 'Compostagem', icon: <Sprout /> },
+  { value: 'WASTE', label: 'Rejeito', icon: <Trash2 /> },
+  { value: 'DONATION', label: 'Doação', icon: <HeartHandshake /> },
+]
 
 const AddDisposalButton = () => {
   const { form } = useCreateDisposalForm()
@@ -110,73 +127,11 @@ const AddDisposalButton = () => {
                   <FormItem>
                     <FormLabel>Tipo do material</FormLabel>
                     <FormControl>
-                      <div className="grid grid-cols-3 gap-4">
-                        <Button
-                          type="button"
-                          variant={
-                            field.value === 'PLASTIC' ? 'selected' : 'outline'
-                          }
-                          onClick={() => field.onChange('PLASTIC')}
-                        >
-                          <CupSoda />
-                          Plástico
-                        </Button>
-
-                        <Button
-                          type="button"
-                          variant={
-                            field.value === 'METAL' ? 'selected' : 'outline'
-                          }
-                          onClick={() => field.onChange('METAL')}
-                        >
-                          <Weight />
-                          Metal
-                        </Button>
-
-                        <Button
-                          type="button"
-                          variant={
-                            field.value === 'GLASS' ? 'default' : 'outline'
-                          }
-                          onClick={() => field.onChange('GLASS')}
-                        >
-                          <Wine />
-                          Vidro
-                        </Button>
-
-                        <Button
-                          type="button"
-                          variant={
-                            field.value === 'PAPER' ? 'default' : 'outline'
-                          }
-                          onClick={() => field.onChange('PAPER')}
-                        >
-                          <StickyNote />
-                          Papel
-                        </Button>
-                        <Button
-                          type="button"
-                          variant={
-                            field.value === 'ORGANIC' ? 'default' : 'outline'
-                          }
-                          onClick={() => field.onChange('ORGANIC')}
-                        >
-                          <Apple />
-                          Orgânico
-                        </Button>
-                        <Button
-                          type="button"
-                          variant={
-                            field.value === 'NOT_RECYCLABLE'
-                              ? 'default'
-                              : 'outline'
-                          }
-                          onClick={() => field.onChange('NOT_RECYCLABLE')}
-                        >
-                          <RefreshCwOff />
-                          Não reciclável
-                        </Button>
-                      </div>
+                      <EnumButtonGroup
+                        value={field.value}
+                        onChange={field.onChange}
+                        options={materialTypeOptions}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -189,53 +144,11 @@ const AddDisposalButton = () => {
                   <FormItem>
                     <FormLabel>Destino</FormLabel>
                     <FormControl>
-                      <div className="grid grid-cols-3 gap-4">
-                        <Button
-                          type="button"
-                          variant={
-                            field.value === 'RECYCLING' ? 'selected' : 'outline'
-                          }
-                          onClick={() => field.onChange('RECYCLING')}
-                        >
-                          <Recycle />
-                          Reciclagem
-                        </Button>
-
-                        <Button
-                          type="button"
-                          variant={
-                            field.value === 'COMPOSTING'
-                              ? 'selected'
-                              : 'outline'
-                          }
-                          onClick={() => field.onChange('COMPOSTING')}
-                        >
-                          <Sprout />
-                          Compostagem
-                        </Button>
-
-                        <Button
-                          type="button"
-                          variant={
-                            field.value === 'WASTE' ? 'selected' : 'outline'
-                          }
-                          onClick={() => field.onChange('WASTE')}
-                        >
-                          <Trash2 />
-                          Rejeito
-                        </Button>
-
-                        <Button
-                          type="button"
-                          variant={
-                            field.value === 'DONATION' ? 'selected' : 'outline'
-                          }
-                          onClick={() => field.onChange('DONATION')}
-                        >
-                          <HeartHandshake />
-                          Doação
-                        </Button>
-                      </div>
+                      <EnumButtonGroup
+                        value={field.value}
+                        onChange={field.onChange}
+                        options={destinationOptions}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
