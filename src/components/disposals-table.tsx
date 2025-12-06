@@ -8,6 +8,7 @@ import type { CreateDisposalResponse } from '@/api/services/disposal/types'
 
 import { Button } from './ui/button'
 import { DataTable } from './ui/data-table'
+import { ScrollArea } from './ui/scroll-area'
 
 type Disposal = CreateDisposalResponse
 
@@ -69,7 +70,11 @@ export const columns: ColumnDef<Disposal>[] = [
 const DisposalsTable = () => {
   const { data: disposals = [] } = useGetDisposals()
   if (!disposals) return null
-  return <DataTable columns={columns} data={disposals} />
+  return (
+    <ScrollArea className="h-[550px] max-h-[550px] rounded-md">
+      <DataTable columns={columns} data={disposals} />
+    </ScrollArea>
+  )
 }
 
 export default DisposalsTable
