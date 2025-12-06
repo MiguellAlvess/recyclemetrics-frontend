@@ -1,4 +1,6 @@
 import type { ColumnDef } from '@tanstack/react-table'
+import { format } from 'date-fns'
+import { ptBR } from 'date-fns/locale/pt-BR'
 
 import { useGetDisposals } from '@/api/hooks/disposal'
 import type { CreateDisposalResponse } from '@/api/services/disposal/types'
@@ -14,11 +16,27 @@ export const columns: ColumnDef<Disposal>[] = [
   },
   {
     accessorKey: 'materialType',
-    header: 'Tipo de material',
+    header: 'Mateiral',
+    cell: ({ row: { original: disposal } }) => {
+      if (disposal.materialType === 'PLASTIC') return 'Plástico'
+      if (disposal.materialType === 'METAL') return 'Metal'
+      if (disposal.materialType === 'GLASS') return 'Vidro'
+      if (disposal.materialType === 'PAPER') return 'Papel'
+      if (disposal.materialType === 'ORGANIC') return 'Orgânico'
+      if (disposal.materialType === 'NOT_RECYCLABLE') return 'Não reciclável'
+      return disposal.materialType
+    },
   },
   {
     accessorKey: 'destination',
     header: 'Destino',
+    cell: ({ row: { original: disposal } }) => {
+      if (disposal.destination === 'RECYCLING') return 'Reciclagem'
+      if (disposal.destination === 'COMPOSTING') return 'Compostagem'
+      if (disposal.destination === 'WASTE') return 'Rejeito'
+      if (disposal.destination === 'DONATION') return 'Doação'
+      return disposal.destination
+    },
   },
   {
     accessorKey: 'quantity',
@@ -27,6 +45,11 @@ export const columns: ColumnDef<Disposal>[] = [
   {
     accessorKey: 'disposalDate',
     header: 'Data do descarte',
+    cell: ({ row: { original: disposal } }) => {
+      return format(new Date(disposal.disposalDate), "dd 'de' MMMM 'de' yyyy", {
+        locale: ptBR,
+      })
+    },
   },
   {
     accessorKey: 'actions',

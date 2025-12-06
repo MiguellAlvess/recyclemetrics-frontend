@@ -24,8 +24,9 @@ const DisposalsPage = () => {
           <AddDisposalButton />
         </PageActions>
       </PageHeader>
-      <PageContent>Descartes</PageContent>
-      <DisposalsTable />
+      <PageContent>
+        <DisposalsTable />
+      </PageContent>
     </PageContainer>
   )
 }
