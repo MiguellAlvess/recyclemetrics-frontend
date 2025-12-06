@@ -28,4 +28,7 @@ export const DisposalService = {
     )
     return response.data
   },
+  delete: async (disposalId: number): Promise<void> => {
+    await protectedApi.delete(`/disposals/${disposalId}`)
+  },
 }

@@ -32,6 +32,19 @@ export const useEditDisposal = () => {
   })
 }
 
+export const useDeleteDisposal = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationKey: ['deleteDisposal'],
+    mutationFn: async (variables: { disposalId: number }) => {
+      return DisposalService.delete(variables.disposalId)
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['disposals'] })
+    },
+  })
+}
+
 export const useGetDisposals = () => {
   return useQuery<CreateDisposalResponse[]>({
     queryKey: ['disposals'],

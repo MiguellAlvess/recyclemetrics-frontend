@@ -5,6 +5,7 @@ import { ptBR } from 'date-fns/locale/pt-BR'
 import { useGetDisposals } from '@/api/hooks/disposal'
 import type { CreateDisposalResponse } from '@/api/services/disposal/types'
 
+import DeleteDisposalButton from './delete-disposal-button'
 import EditDisposalButton from './edit-disposal-button'
 import { DataTable } from './ui/data-table'
 import { ScrollArea } from './ui/scroll-area'
@@ -57,7 +58,12 @@ export const columns: ColumnDef<Disposal>[] = [
     accessorKey: 'actions',
     header: 'Ações',
     cell: ({ row: { original: disposal } }) => {
-      return <EditDisposalButton disposal={disposal} />
+      return (
+        <div className="flex items-center gap-2">
+          <EditDisposalButton disposal={disposal} />
+          <DeleteDisposalButton disposalId={disposal.disposalId} />
+        </div>
+      )
     },
   },
 ]
