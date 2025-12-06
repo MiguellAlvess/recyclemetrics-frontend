@@ -25,7 +25,7 @@ export const useCreateDisposalForm = () => {
   return { form }
 }
 
-export const useEditCreateDisposalForm = ({
+export const useEditDisposalForm = ({
   disposal,
   onSuccess,
   onError,
