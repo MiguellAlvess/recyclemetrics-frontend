@@ -1,4 +1,4 @@
-import AddDisposalButton from '@/components/add-disposal-button'
+import AddPurchaseButton from '@/components/add-purchase-button'
 import {
   PageActions,
   PageContainer,
@@ -20,7 +20,7 @@ const PurchasesPage = () => {
           </PageDescription>
         </PageHeaderContent>
         <PageActions>
-          <AddDisposalButton />
+          <AddPurchaseButton />
         </PageActions>
       </PageHeader>
       <PageContent>
