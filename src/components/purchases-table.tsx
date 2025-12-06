@@ -6,6 +6,7 @@ import { useGetPurchases } from '@/api/hooks/purchase'
 import type { CreatePurchaseResponse } from '@/api/services/purchase/type'
 
 import DeletePurchaseButton from './delete-purchase-button'
+import EditPurchaseButton from './edit-purchase-button'
 import { DataTable } from './ui/data-table'
 import { ScrollArea } from './ui/scroll-area'
 
@@ -35,7 +36,7 @@ export const columns: ColumnDef<Purchase>[] = [
   },
   {
     accessorKey: 'purchaseDate',
-    header: 'Data do descarte',
+    header: 'Data da compra',
     cell: ({ row: { original: purchase } }) => {
       return format(new Date(purchase.purchaseDate), "dd 'de' MMMM 'de' yyyy", {
         locale: ptBR,
@@ -48,6 +49,7 @@ export const columns: ColumnDef<Purchase>[] = [
     cell: ({ row: { original: purchase } }) => {
       return (
         <div className="flex items-center gap-2">
+          <EditPurchaseButton purchase={purchase} />
           <DeletePurchaseButton purchaseId={purchase.purchaseId} />
         </div>
       )
