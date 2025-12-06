@@ -4,16 +4,16 @@ export const createDisposalSchema = z.object({
   disposalProduct: z.string().trim().min(1, {
     message: 'O produto é obrigatório',
   }),
-  materialType: z.enum([
-    'PLASTIC',
-    'PAPER',
-    'GLASS',
-    'ORGANIC',
-    'METAL',
-    'NOT_RECYCLABLE',
-  ]),
+  materialType: z.enum(
+    ['PLASTIC', 'PAPER', 'GLASS', 'ORGANIC', 'METAL', 'NOT_RECYCLABLE'],
+    {
+      message: 'O tipo de material é obrigatório',
+    }
+  ),
   quantity: z.coerce.number().min(1, 'A quantidade é obrigatória'),
-  destination: z.enum(['RECYCLING', 'COMPOSTING', 'WASTE', 'DONATION']),
+  destination: z.enum(['RECYCLING', 'COMPOSTING', 'WASTE', 'DONATION'], {
+    message: 'O destino é obrigatório',
+  }),
   disposalDate: z.date({
     message: 'A data é obrigatória',
   }),
