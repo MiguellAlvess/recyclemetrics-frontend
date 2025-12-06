@@ -29,6 +29,7 @@ export default defineConfig([
       'react-refresh/only-export-components': 'off',
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
+      'react-hooks/incompatible-library': 'off',
     },
   },
   eslintConfigPrettier,
