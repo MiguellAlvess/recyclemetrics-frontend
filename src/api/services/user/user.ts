@@ -1,6 +1,13 @@
 import { protectedApi, publicApi } from '@/lib/axios'
 
-import type { AuthResponse, LoginInput, SignupInput, User } from './types'
+import type {
+  AuthResponse,
+  LoginInput,
+  SignupInput,
+  UpdateUserInput,
+  UpdateUserResponse,
+  User,
+} from './types'
 
 export const UserService = {
   signup: async (input: SignupInput): Promise<AuthResponse> => {
@@ -10,6 +17,14 @@ export const UserService = {
 
   login: async (input: LoginInput): Promise<AuthResponse> => {
     const response = await publicApi.post('/users/auth/login', input)
+    return response.data
+  },
+
+  update: async (
+    userId: number,
+    input: UpdateUserInput
+  ): Promise<UpdateUserResponse> => {
+    const response = await protectedApi.patch(`/users/${userId}`, input)
     return response.data
   },
 
