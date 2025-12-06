@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { useEditDisposal } from '@/api/hooks/disposal'
@@ -26,6 +27,17 @@ export const useCreateDisposalForm = () => {
   return { form }
 }
 
+const getEditDisposalFormDefaultValues = (disposal: CreateDisposalResponse) => {
+  return {
+    disposalId: disposal.disposalId,
+    disposalProduct: disposal.disposalProduct,
+    materialType: disposal.materialType as EditDisposalSchema['materialType'],
+    quantity: disposal.quantity,
+    destination: disposal.destination as EditDisposalSchema['destination'],
+    disposalDate: new Date(disposal.disposalDate),
+  }
+}
+
 export const useEditDisposalForm = ({
   disposal,
   onSuccess,
@@ -34,17 +46,13 @@ export const useEditDisposalForm = ({
   const { mutateAsync: updateDisposal } = useEditDisposal()
   const form = useForm({
     resolver: zodResolver(editDisposalSchema),
-    defaultValues: {
-      disposalId: disposal.disposalId,
-      disposalProduct: disposal.disposalProduct,
-      materialType: disposal.materialType as EditDisposalSchema['materialType'],
-      quantity: disposal.quantity,
-      destination: disposal.destination as EditDisposalSchema['destination'],
-      disposalDate: disposal.disposalDate,
-    },
+    defaultValues: getEditDisposalFormDefaultValues(disposal),
     shouldUnregister: true,
   })
-
+  useEffect(() => {
+    form.reset(getEditDisposalFormDefaultValues(disposal))
+    form.setValue('disposalId', disposal.disposalId)
+  }, [disposal, form])
   const onSubmit = async (data: EditDisposalSchema) => {
     try {
       await updateDisposal(data)
