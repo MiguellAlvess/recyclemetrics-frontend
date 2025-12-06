@@ -3,6 +3,7 @@ import {
   LogOut,
   RecycleIcon,
   ShoppingBasketIcon,
+  User,
 } from 'lucide-react'
 import { Link, useLocation } from 'react-router-dom'
 
@@ -107,6 +108,12 @@ const AppSidebar = () => {
                 <DropdownMenuItem onClick={logout}>
                   <LogOut className="mr-2 h-4 w-4" />
                   Sair
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/profile" className="cursor-pointer">
+                    <User className="mr-2 h-4 w-4" />
+                    Meu perfil
+                  </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
