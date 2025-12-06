@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
 import { useEditDisposal } from '@/api/hooks/disposal'
+import type { CreateDisposalResponse } from '@/api/services/disposal/types'
 
 import {
   createDisposalSchema,
@@ -36,9 +37,9 @@ export const useEditDisposalForm = ({
     defaultValues: {
       disposalId: disposal.disposalId,
       disposalProduct: disposal.disposalProduct,
-      materialType: disposal.materialType,
+      materialType: disposal.materialType as EditDisposalSchema['materialType'],
       quantity: disposal.quantity,
-      destination: disposal.destination,
+      destination: disposal.destination as EditDisposalSchema['destination'],
       disposalDate: disposal.disposalDate,
     },
     shouldUnregister: true,
@@ -58,7 +59,7 @@ export const useEditDisposalForm = ({
 }
 
 type UseEditDisposalFormParams = {
-  disposal: EditDisposalSchema
+  disposal: CreateDisposalResponse
   onSuccess?: () => void
   onError?: () => void
 }
