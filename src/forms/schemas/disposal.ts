@@ -20,3 +20,9 @@ export const createDisposalSchema = z.object({
 })
 
 export type CreateDisposalSchema = z.infer<typeof createDisposalSchema>
+
+export const editDisposalSchema = createDisposalSchema.extend({
+  disposalId: z.number(),
+})
+
+export type EditDisposalSchema = z.infer<typeof editDisposalSchema>
