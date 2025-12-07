@@ -20,6 +20,7 @@ export const useCreateDisposal = () => {
     mutationFn: (data: CreateDisposalSchema) => DisposalService.create(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['disposals'] })
+      queryClient.invalidateQueries({ queryKey: ['dashboard'] })
     },
   })
 }
@@ -33,6 +34,7 @@ export const useEditDisposal = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['disposals'] })
+      queryClient.invalidateQueries({ queryKey: ['dashboard'] })
     },
   })
 }
@@ -46,6 +48,7 @@ export const useDeleteDisposal = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['disposals'] })
+      queryClient.invalidateQueries({ queryKey: ['dashboard'] })
     },
   })
 }
