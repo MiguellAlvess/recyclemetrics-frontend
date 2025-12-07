@@ -16,6 +16,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { useAuthContext } from '@/context/auth'
+import { getUserInitials } from '@/helpers/get-user-initials'
 
 import {
   Sidebar,
@@ -51,6 +52,7 @@ const items = [
 const AppSidebar = () => {
   const { user, logout } = useAuthContext()
   const { pathname } = useLocation()
+  const initials = getUserInitials(user?.name)
 
   return (
     <Sidebar>
@@ -87,14 +89,7 @@ const AppSidebar = () => {
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton size="lg">
                   <Avatar>
-                    <AvatarFallback>
-                      {user?.name
-                        ?.split(' ')
-                        .map((n) => n[0])
-                        .join('')
-                        .slice(0, 2)
-                        .toUpperCase() || 'US'}
-                    </AvatarFallback>
+                    <AvatarFallback>{initials}</AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col text-left">
                     <p className="text-xs font-semibold">{user?.name}</p>
