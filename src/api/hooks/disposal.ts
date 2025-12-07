@@ -8,6 +8,7 @@ import type {
 import { DisposalService } from '../services/disposal/disposal'
 import type {
   CreateDisposalResponse,
+  DestinationChartData,
   GetMostUsedDestinationResponse,
 } from '../services/disposal/types'
 
@@ -59,5 +60,12 @@ export const useGetMostUsedDestination = () => {
   return useQuery<GetMostUsedDestinationResponse>({
     queryKey: ['dashboard', 'mostUsedDestination'],
     queryFn: () => DisposalService.getMostUsedDestination(),
+  })
+}
+
+export const useGetDestinationMetrics = () => {
+  return useQuery<DestinationChartData[]>({
+    queryKey: ['dashboard', 'destinationMetrics'],
+    queryFn: () => DisposalService.getDestinationMetrics(),
   })
 }

@@ -29,4 +29,13 @@ export type GetMostUsedDestinationResponse = {
   quantity: number
 }
 
+export type DestinationSummaryResponse = {
+  destinationAmountSummary: Record<string, number>
+}
+
+export type DestinationChartData = {
+  destinationLabel: string
+  quantity: number
+}
+
 export type UpdateDisposalResponse = CreateDisposalResponse

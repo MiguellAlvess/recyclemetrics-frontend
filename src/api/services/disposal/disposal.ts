@@ -3,6 +3,8 @@ import { protectedApi } from '@/lib/axios'
 import type {
   CreateDisposalInput,
   CreateDisposalResponse,
+  DestinationChartData,
+  DestinationSummaryResponse,
   GetMostUsedDestinationResponse,
   UpdateDisposalInput,
   UpdateDisposalResponse,
@@ -35,5 +37,15 @@ export const DisposalService = {
   getMostUsedDestination: async (): Promise<GetMostUsedDestinationResponse> => {
     const response = await protectedApi.get('/disposals/metrics/destination')
     return response.data
+  },
+  getDestinationMetrics: async (): Promise<DestinationChartData[]> => {
+    const response = await protectedApi.get<DestinationSummaryResponse>(
+      '/disposals/disposals-destination-summary-30-days'
+    )
+    const summary = response.data.destinationAmountSummary
+    return Object.entries(summary).map(([destinationLabel, quantity]) => ({
+      destinationLabel,
+      quantity,
+    }))
   },
 }
