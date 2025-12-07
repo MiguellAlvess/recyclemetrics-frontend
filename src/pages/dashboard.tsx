@@ -1,6 +1,7 @@
 import {
   useGetDestinationMetrics,
   useGetMostUsedDestination,
+  useGetPercentageRecycledItemsDisposals30Days,
   useGetTotalDisposals30Days,
 } from '@/api/hooks/disposal'
 import {
@@ -25,6 +26,8 @@ const DashboardPage = () => {
   const { data: destinationMetrics = [] } = useGetDestinationMetrics()
   const { data: totalDisposals30Days } = useGetTotalDisposals30Days()
   const { data: totalPurchases30Days } = useGetTotalPurchases30Days()
+  const { data: percentageRecycledItems30Days } =
+    useGetPercentageRecycledItemsDisposals30Days()
   return (
     <PageContainer>
       <PageHeader>
@@ -43,7 +46,9 @@ const DashboardPage = () => {
           totalPurchase30Days={
             totalPurchases30Days?.totalPurchasesCurrentMonth || 0
           }
-          recyclingPercentage30Days={15}
+          recyclingPercentage30Days={
+            percentageRecycledItems30Days?.percentageDisposalRecycled || 0
+          }
           mostUsedDestination30Days={mostUsedDestination?.destination || 'N/A'}
         />
         <div className="grid grid-cols-[2.25fr_1.5fr] items-start gap-5">

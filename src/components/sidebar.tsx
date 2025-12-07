@@ -1,4 +1,5 @@
 import {
+  Bot,
   LayoutDashboard,
   LogOut,
   RecycleIcon,
@@ -46,6 +47,11 @@ const items = [
     title: 'Compras',
     url: '/purchases',
     icon: ShoppingBasketIcon,
+  },
+  {
+    title: 'Assistente virtual',
+    url: '/virtual-assistant',
+    icon: Bot,
   },
 ]
 

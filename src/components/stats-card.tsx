@@ -23,12 +23,12 @@ const StatsCards = ({
     },
     {
       title: 'Total de descartes',
-      value: totalDisposals30Days?.toString(),
+      value: totalDisposals30Days,
       icon: Archive,
     },
     {
       title: 'Porcentagem de reciclagem',
-      value: recyclingPercentage30Days?.toString(),
+      value: recyclingPercentage30Days,
       icon: Recycle,
     },
     {
@@ -53,7 +53,11 @@ const StatsCards = ({
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-xl font-medium">{stat.value}</div>
+              <div className="text-xl font-medium">
+                {stat.value === recyclingPercentage30Days
+                  ? `${stat.value}%`
+                  : stat.value}
+              </div>
             </CardContent>
           </Card>
         )
