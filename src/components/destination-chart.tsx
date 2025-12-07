@@ -30,36 +30,47 @@ const chartConfig = {
 
 interface DestinationChartProps {
   data: DestinationChartData[]
+  className?: string
 }
 
-const DestinationChart = ({ data }: DestinationChartProps) => {
+const DestinationChart = ({ data, className }: DestinationChartProps) => {
   const hasData = data && data.length > 0
 
   return (
-    <Card>
+    <Card className={className}>
       <CardHeader>
         <CardTitle>Destinos de descarte</CardTitle>
         <CardDescription>
           Comparativo dos destinos mais utilizados nos últimos 30 dias
         </CardDescription>
       </CardHeader>
-
-      <CardContent>
+      <CardContent className="py-1">
         {hasData ? (
-          <ChartContainer config={chartConfig}>
+          <ChartContainer
+            config={chartConfig}
+            className="mt-3 h-[260px] w-full"
+          >
             <BarChart
               accessibilityLayer
               data={data}
               layout="vertical"
-              margin={{ left: -20 }}
+              barCategoryGap={12}
+              margin={{
+                left: 15,
+                right: 16,
+                top: 4,
+                bottom: 4,
+              }}
             >
               <XAxis type="number" dataKey="quantity" hide />
               <YAxis
                 dataKey="destinationLabel"
                 type="category"
                 tickLine={false}
-                tickMargin={10}
                 axisLine={false}
+                tickMargin={8}
+                width={90}
+                tick={{ fontSize: 12 }}
               />
               <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
               <Bar
@@ -71,7 +82,7 @@ const DestinationChart = ({ data }: DestinationChartProps) => {
             </BarChart>
           </ChartContainer>
         ) : (
-          <div className="flex h-[240px] flex-col items-center justify-center gap-3 text-center">
+          <div className="flex h-[220px] flex-col items-center justify-center gap-3 text-center">
             <p className="text-sm font-medium text-muted-foreground">
               Nenhum descarte registrado nos últimos 30 dias.
             </p>
@@ -82,8 +93,7 @@ const DestinationChart = ({ data }: DestinationChartProps) => {
           </div>
         )}
       </CardContent>
-
-      <CardFooter className="flex-col items-start gap-2 text-sm">
+      <CardFooter className="mt-1 flex-col items-start gap-1 pb-3 pt-5 text-xs">
         <div className="flex items-center gap-2 font-medium leading-none">
           Panorama dos destinos de descarte
           <TrendingUp className="h-4 w-4 text-primary" />

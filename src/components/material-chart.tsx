@@ -30,22 +30,23 @@ const chartConfig = {
 
 interface MaterialChartProps {
   data: MaterialChartData[]
+  className?: string
 }
 
-const MaterialChart = ({ data }: MaterialChartProps) => {
+const MaterialChart = ({ data, className }: MaterialChartProps) => {
   const hasData = data && data.length > 0
 
   return (
-    <Card>
+    <Card className={className}>
       <CardHeader>
         <CardTitle>Tipos de materiais</CardTitle>
         <CardDescription>
           Comparativo dos materiais das compras dos últimos 30 dias
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="py-3">
         {hasData ? (
-          <ChartContainer config={chartConfig}>
+          <ChartContainer config={chartConfig} className="h-[260px] w-full">
             <BarChart accessibilityLayer data={data}>
               <CartesianGrid vertical={false} />
               <XAxis
@@ -64,7 +65,7 @@ const MaterialChart = ({ data }: MaterialChartProps) => {
             </BarChart>
           </ChartContainer>
         ) : (
-          <div className="flex h-[240px] flex-col items-center justify-center gap-3 text-center">
+          <div className="flex h-[260px] flex-col items-center justify-center gap-3 text-center">
             <p className="text-sm font-medium text-muted-foreground">
               Nenhuma compra registrada nos últimos 30 dias.
             </p>
@@ -74,7 +75,7 @@ const MaterialChart = ({ data }: MaterialChartProps) => {
           </div>
         )}
       </CardContent>
-      <CardFooter className="flex-col items-start gap-2 text-sm">
+      <CardFooter className="flex-col items-start gap-1 pb-3 pt-5 text-xs">
         <div className="flex items-center gap-2 font-medium leading-none">
           Panorama dos materiais comprados
           <TrendingUp className="h-4 w-4 text-primary" />

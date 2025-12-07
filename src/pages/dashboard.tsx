@@ -46,7 +46,7 @@ const DashboardPage = () => {
           recyclingPercentage30Days={15}
           mostUsedDestination30Days={mostUsedDestination?.destination || 'N/A'}
         />
-        <div className="grid grid-cols-[2.25fr_1fr] gap-5">
+        <div className="grid grid-cols-[2.25fr_1.5fr] items-start gap-5">
           <MaterialChart data={materialMetrics} />
           <DestinationChart data={destinationMetrics} />
         </div>
