@@ -31,7 +31,7 @@ export type MaterialChartData = {
 }
 
 export type GetTotalPurchases30DaysResponse = {
-  totalPurchases30Days: number
+  totalPurchasesCurrentMonth: number
 }
 
 export type UpdatePurchaseResponse = CreatePurchaseResponse

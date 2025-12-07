@@ -38,7 +38,9 @@ const DashboardPage = () => {
       <PageContent>
         <StatsCards
           totalDisposals30Days={totalDisposals30Days?.totalDisposals30Days || 0}
-          totalPurchase30Days={totalPurchases30Days?.totalPurchases30Days || 0}
+          totalPurchase30Days={
+            totalPurchases30Days?.totalPurchasesCurrentMonth || 0
+          }
           recyclingPercentage30Days={15}
           mostUsedDestination30Days={mostUsedDestination?.destination || 'N/A'}
         />
