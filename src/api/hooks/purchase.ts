@@ -19,6 +19,7 @@ export const useCreatePurchase = () => {
     mutationFn: (data: CreatePurchaseSchema) => PurchaseService.create(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['purchases'] })
+      queryClient.invalidateQueries({ queryKey: ['dashboard'] })
     },
   })
 }
@@ -32,6 +33,7 @@ export const useEditPurchase = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['purchases'] })
+      queryClient.invalidateQueries({ queryKey: ['dashboard'] })
     },
   })
 }
@@ -45,6 +47,7 @@ export const useDeletePurchase = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['purchases'] })
+      queryClient.invalidateQueries({ queryKey: ['dashboard'] })
     },
   })
 }
