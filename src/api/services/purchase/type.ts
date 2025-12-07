@@ -21,4 +21,13 @@ export type UpdatePurchaseInput = {
   purchaseDate: Date
 }
 
+export type MaterialSummaryResponse = {
+  materialAmountSummary: Record<string, number>
+}
+
+export type MaterialChartData = {
+  materialLabel: string
+  quantity: number
+}
+
 export type UpdatePurchaseResponse = CreatePurchaseResponse

@@ -3,6 +3,8 @@ import { protectedApi } from '@/lib/axios'
 import type {
   CreatePurchaseInput,
   CreatePurchaseResponse,
+  MaterialChartData,
+  MaterialSummaryResponse,
   UpdatePurchaseInput,
   UpdatePurchaseResponse,
 } from './type'
@@ -29,5 +31,15 @@ export const PurchaseService = {
   getAll: async (): Promise<CreatePurchaseResponse[]> => {
     const response = await protectedApi.get('/purchases')
     return response.data
+  },
+  getMaterialMetrics: async (): Promise<MaterialChartData[]> => {
+    const response = await protectedApi.get<MaterialSummaryResponse>(
+      '/purchases/metrics/purchases-material-summary'
+    )
+    const summary = response.data.materialAmountSummary
+    return Object.entries(summary).map(([materialLabel, quantity]) => ({
+      materialLabel,
+      quantity,
+    }))
   },
 }

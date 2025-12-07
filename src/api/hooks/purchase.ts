@@ -6,7 +6,10 @@ import type {
 } from '@/forms/schemas/purchase'
 
 import { PurchaseService } from '../services/purchase/purchase'
-import type { CreatePurchaseResponse } from '../services/purchase/type'
+import type {
+  CreatePurchaseResponse,
+  MaterialChartData,
+} from '../services/purchase/type'
 
 export const useCreatePurchase = () => {
   const queryClient = useQueryClient()
@@ -49,5 +52,12 @@ export const useGetPurchases = () => {
   return useQuery<CreatePurchaseResponse[]>({
     queryKey: ['purchases'],
     queryFn: () => PurchaseService.getAll(),
+  })
+}
+
+export const useGetMaterialMetrics = () => {
+  return useQuery<MaterialChartData[]>({
+    queryKey: ['dashboard', 'materialMetrics'],
+    queryFn: () => PurchaseService.getMaterialMetrics(),
   })
 }
