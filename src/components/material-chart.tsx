@@ -16,9 +16,6 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart'
 
-export const description =
-  'Bar chart comparando os tipos de materiais das compras nos últimos 30 dias'
-
 type MaterialChartData = {
   materialLabel: string
   quantity: number
@@ -36,6 +33,8 @@ interface MaterialChartProps {
 }
 
 const MaterialChart = ({ data }: MaterialChartProps) => {
+  const hasData = data && data.length > 0
+
   return (
     <Card>
       <CardHeader>
@@ -44,28 +43,37 @@ const MaterialChart = ({ data }: MaterialChartProps) => {
           Comparativo dos materiais das compras dos últimos 30 dias
         </CardDescription>
       </CardHeader>
-
       <CardContent>
-        <ChartContainer config={chartConfig}>
-          <BarChart accessibilityLayer data={data}>
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="materialLabel"
-              tickLine={false}
-              tickMargin={10}
-              axisLine={false}
-            />
-            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-            <Bar
-              dataKey="quantity"
-              fill="hsl(var(--primary))"
-              radius={8}
-              className="transition-all hover:opacity-80"
-            />
-          </BarChart>
-        </ChartContainer>
+        {hasData ? (
+          <ChartContainer config={chartConfig}>
+            <BarChart accessibilityLayer data={data}>
+              <CartesianGrid vertical={false} />
+              <XAxis
+                dataKey="materialLabel"
+                tickLine={false}
+                tickMargin={10}
+                axisLine={false}
+              />
+              <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+              <Bar
+                dataKey="quantity"
+                fill="hsl(var(--primary))"
+                radius={8}
+                className="transition-all hover:opacity-80"
+              />
+            </BarChart>
+          </ChartContainer>
+        ) : (
+          <div className="flex h-[240px] flex-col items-center justify-center gap-3 text-center">
+            <p className="text-sm font-medium text-muted-foreground">
+              Nenhuma compra registrada nos últimos 30 dias.
+            </p>
+            <p className="text-xs text-muted-foreground">
+              Assim que você cadastrar uma compra, o gráfico será exibido aqui.
+            </p>
+          </div>
+        )}
       </CardContent>
-
       <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="flex items-center gap-2 font-medium leading-none">
           Panorama dos materiais comprados
