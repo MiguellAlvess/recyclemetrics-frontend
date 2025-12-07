@@ -3,37 +3,37 @@ import { Archive, MapPinHouse, Recycle, ShoppingBasket } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 interface StatsCardsProps {
-  totalPurchase: number | null
-  totalDisposals: number
-  recyclingPercentage: number
-  mostUsedDestination: string
+  totalDisposals30Days: number | undefined
+  totalPurchase30Days: number | undefined
+  recyclingPercentage30Days: number | undefined
+  mostUsedDestination30Days: string | undefined
 }
 
 const StatsCards = ({
-  totalPurchase,
-  totalDisposals,
-  recyclingPercentage,
-  mostUsedDestination,
+  totalPurchase30Days,
+  totalDisposals30Days,
+  recyclingPercentage30Days,
+  mostUsedDestination30Days,
 }: StatsCardsProps) => {
   const stats = [
     {
       title: 'Total de compras',
-      value: totalPurchase,
+      value: totalPurchase30Days,
       icon: ShoppingBasket,
     },
     {
       title: 'Total de descartes',
-      value: totalDisposals.toString(),
+      value: totalDisposals30Days?.toString(),
       icon: Archive,
     },
     {
       title: 'Porcentagem de reciclagem',
-      value: recyclingPercentage.toString(),
+      value: recyclingPercentage30Days?.toString(),
       icon: Recycle,
     },
     {
       title: 'Destino mais usado',
-      value: mostUsedDestination,
+      value: mostUsedDestination30Days,
       icon: MapPinHouse,
     },
   ]

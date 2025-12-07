@@ -1,5 +1,13 @@
-import { useGetMostUsedDestination } from '@/api/hooks/disposal'
-import { useGetMaterialMetrics } from '@/api/hooks/purchase'
+import {
+  useGetDestinationMetrics,
+  useGetMostUsedDestination,
+  useGetTotalDisposals30Days,
+} from '@/api/hooks/disposal'
+import {
+  useGetMaterialMetrics,
+  useGetTotalPurchases30Days,
+} from '@/api/hooks/purchase'
+import DestinationChart from '@/components/destination-chart'
 import MaterialChart from '@/components/material-chart'
 import {
   PageContainer,
@@ -14,6 +22,9 @@ import StatsCards from '@/components/stats-card'
 const DashboardPage = () => {
   const { data: mostUsedDestination } = useGetMostUsedDestination()
   const { data: materialMetrics = [] } = useGetMaterialMetrics()
+  const { data: destinationMetrics = [] } = useGetDestinationMetrics()
+  const { data: totalDisposals30Days } = useGetTotalDisposals30Days()
+  const { data: totalPurchases30Days } = useGetTotalPurchases30Days()
   return (
     <PageContainer>
       <PageHeader>
@@ -26,13 +37,14 @@ const DashboardPage = () => {
       </PageHeader>
       <PageContent>
         <StatsCards
-          totalDisposals={mostUsedDestination?.quantity || 0}
-          recyclingPercentage={15}
-          totalPurchase={10}
-          mostUsedDestination={mostUsedDestination?.destination || 'N/A'}
+          totalDisposals30Days={totalDisposals30Days?.totalDisposals30Days || 0}
+          totalPurchase30Days={totalPurchases30Days?.totalPurchases30Days || 0}
+          recyclingPercentage30Days={15}
+          mostUsedDestination30Days={mostUsedDestination?.destination || 'N/A'}
         />
-        <div className="grid grid-cols-[2.25fr_1fr]">
+        <div className="grid grid-cols-[2.25fr_1fr] gap-5">
           <MaterialChart data={materialMetrics} />
+          <DestinationChart data={destinationMetrics} />
         </div>
       </PageContent>
     </PageContainer>
