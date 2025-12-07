@@ -42,4 +42,8 @@ export type GetTotalDisposals30DaysResponse = {
   totalDisposalsCurrentMonth: number
 }
 
+export type GetPercentageRecycledItemsDisposalsResponse = {
+  percentageDisposalRecycled: number
+}
+
 export type UpdateDisposalResponse = CreateDisposalResponse

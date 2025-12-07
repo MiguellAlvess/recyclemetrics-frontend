@@ -6,6 +6,7 @@ import type {
   DestinationChartData,
   DestinationSummaryResponse,
   GetMostUsedDestinationResponse,
+  GetPercentageRecycledItemsDisposalsResponse,
   GetTotalDisposals30DaysResponse,
   UpdateDisposalInput,
   UpdateDisposalResponse,
@@ -53,6 +54,13 @@ export const DisposalService = {
     async (): Promise<GetTotalDisposals30DaysResponse> => {
       const response = await protectedApi.get(
         '/disposals/total-itens-disposed-30-days'
+      )
+      return response.data
+    },
+  getPercentageRecycledItemsDisposals30Days:
+    async (): Promise<GetPercentageRecycledItemsDisposalsResponse> => {
+      const response = await protectedApi.get(
+        '/disposals/percentage-disposals-items-30-days'
       )
       return response.data
     },

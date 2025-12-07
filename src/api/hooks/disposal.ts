@@ -10,6 +10,7 @@ import type {
   CreateDisposalResponse,
   DestinationChartData,
   GetMostUsedDestinationResponse,
+  GetPercentageRecycledItemsDisposalsResponse,
   GetTotalDisposals30DaysResponse,
 } from '../services/disposal/types'
 
@@ -78,5 +79,12 @@ export const useGetTotalDisposals30Days = () => {
   return useQuery<GetTotalDisposals30DaysResponse>({
     queryKey: ['dashboard', 'totalDisposals30Days'],
     queryFn: () => DisposalService.getTotalDisposals30Days(),
+  })
+}
+
+export const useGetPercentageRecycledItemsDisposals30Days = () => {
+  return useQuery<GetPercentageRecycledItemsDisposalsResponse>({
+    queryKey: ['dashboard', 'percentageRecycledItems30Days'],
+    queryFn: () => DisposalService.getPercentageRecycledItemsDisposals30Days(),
   })
 }
