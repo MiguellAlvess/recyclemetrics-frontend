@@ -1,6 +1,10 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import type { LoginSchema, SignupSchema } from '@/forms/schemas/user'
+import type {
+  EditUserSchema,
+  LoginSchema,
+  SignupSchema,
+} from '@/forms/schemas/user'
 
 import { UserService } from '../services/user/user'
 
@@ -27,6 +31,22 @@ export const useLoginMutation = () => {
         email: variables.email,
         password: variables.password,
       })
+    },
+  })
+}
+
+export const useEditUser = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationKey: ['editUser'],
+    mutationFn: async (variables: EditUserSchema) => {
+      return UserService.update(variables)
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['disposals'] })
+      queryClient.invalidateQueries({ queryKey: ['profile'] })
+      queryClient.invalidateQueries({ queryKey: ['purchases'] })
+      queryClient.invalidateQueries({ queryKey: ['dashboard'] })
     },
   })
 }

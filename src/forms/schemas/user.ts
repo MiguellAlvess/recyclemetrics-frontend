@@ -38,3 +38,23 @@ export const signupSchema = z
   })
 
 export type SignupSchema = z.infer<typeof signupSchema>
+
+export const editUserSchema = z
+  .object({
+    userId: z.number(),
+    name: signupSchema.shape.name.optional(),
+    email: signupSchema.shape.email.optional(),
+    password: signupSchema.shape.password.optional(),
+    passwordConfirmation: signupSchema.shape.passwordConfirmation.optional(),
+  })
+  .refine(
+    (data) =>
+      (!data.password && !data.passwordConfirmation) ||
+      data.password === data.passwordConfirmation,
+    {
+      message: 'Senhas não conferem',
+      path: ['passwordConfirmation'],
+    }
+  )
+
+export type EditUserSchema = z.infer<typeof editUserSchema>
