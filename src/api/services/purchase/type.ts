@@ -30,4 +30,8 @@ export type MaterialChartData = {
   quantity: number
 }
 
+export type GetTotalPurchases30DaysResponse = {
+  totalPurchases30Days: number
+}
+
 export type UpdatePurchaseResponse = CreatePurchaseResponse

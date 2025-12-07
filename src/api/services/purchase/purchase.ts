@@ -3,6 +3,7 @@ import { protectedApi } from '@/lib/axios'
 import type {
   CreatePurchaseInput,
   CreatePurchaseResponse,
+  GetTotalPurchases30DaysResponse,
   MaterialChartData,
   MaterialSummaryResponse,
   UpdatePurchaseInput,
@@ -42,4 +43,11 @@ export const PurchaseService = {
       quantity,
     }))
   },
+  getTotalPurchases30Days:
+    async (): Promise<GetTotalPurchases30DaysResponse> => {
+      const response = await protectedApi.get(
+        '/purchases/total-itens-purchased-30-days'
+      )
+      return response.data
+    },
 }

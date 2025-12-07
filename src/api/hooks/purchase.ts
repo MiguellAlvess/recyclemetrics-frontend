@@ -8,6 +8,7 @@ import type {
 import { PurchaseService } from '../services/purchase/purchase'
 import type {
   CreatePurchaseResponse,
+  GetTotalPurchases30DaysResponse,
   MaterialChartData,
 } from '../services/purchase/type'
 
@@ -59,5 +60,12 @@ export const useGetMaterialMetrics = () => {
   return useQuery<MaterialChartData[]>({
     queryKey: ['dashboard', 'materialMetrics'],
     queryFn: () => PurchaseService.getMaterialMetrics(),
+  })
+}
+
+export const useGetTotalPurchases30Days = () => {
+  return useQuery<GetTotalPurchases30DaysResponse>({
+    queryKey: ['dashboard', 'totalPurchases30Days'],
+    queryFn: () => PurchaseService.getTotalPurchases30Days(),
   })
 }
