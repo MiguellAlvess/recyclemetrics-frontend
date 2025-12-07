@@ -10,6 +10,7 @@ import type {
   CreateDisposalResponse,
   DestinationChartData,
   GetMostUsedDestinationResponse,
+  GetTotalDisposals30DaysResponse,
 } from '../services/disposal/types'
 
 export const useCreateDisposal = () => {
@@ -67,5 +68,12 @@ export const useGetDestinationMetrics = () => {
   return useQuery<DestinationChartData[]>({
     queryKey: ['dashboard', 'destinationMetrics'],
     queryFn: () => DisposalService.getDestinationMetrics(),
+  })
+}
+
+export const useGetTotalDisposals30Days = () => {
+  return useQuery<GetTotalDisposals30DaysResponse>({
+    queryKey: ['dashboard', 'totalDisposals30Days'],
+    queryFn: () => DisposalService.getTotalDisposals30Days(),
   })
 }

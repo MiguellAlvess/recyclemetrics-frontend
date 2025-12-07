@@ -38,4 +38,8 @@ export type DestinationChartData = {
   quantity: number
 }
 
+export type GetTotalDisposals30DaysResponse = {
+  totalDisposals30Days: number
+}
+
 export type UpdateDisposalResponse = CreateDisposalResponse

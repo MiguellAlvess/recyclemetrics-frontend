@@ -6,6 +6,7 @@ import type {
   DestinationChartData,
   DestinationSummaryResponse,
   GetMostUsedDestinationResponse,
+  GetTotalDisposals30DaysResponse,
   UpdateDisposalInput,
   UpdateDisposalResponse,
 } from './types'
@@ -48,4 +49,11 @@ export const DisposalService = {
       quantity,
     }))
   },
+  getTotalDisposals30Days:
+    async (): Promise<GetTotalDisposals30DaysResponse> => {
+      const response = await protectedApi.get(
+        '/disposals/total-itens-disposed-30-days'
+      )
+      return response.data
+    },
 }
