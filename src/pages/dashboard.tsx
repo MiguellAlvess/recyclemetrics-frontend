@@ -37,7 +37,9 @@ const DashboardPage = () => {
       </PageHeader>
       <PageContent>
         <StatsCards
-          totalDisposals30Days={totalDisposals30Days?.totalDisposals30Days || 0}
+          totalDisposals30Days={
+            totalDisposals30Days?.totalDisposalsCurrentMonth || 0
+          }
           totalPurchase30Days={
             totalPurchases30Days?.totalPurchasesCurrentMonth || 0
           }

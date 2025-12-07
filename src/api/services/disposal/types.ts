@@ -39,7 +39,7 @@ export type DestinationChartData = {
 }
 
 export type GetTotalDisposals30DaysResponse = {
-  totalDisposals30Days: number
+  totalDisposalsCurrentMonth: number
 }
 
 export type UpdateDisposalResponse = CreateDisposalResponse
