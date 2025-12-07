@@ -55,7 +55,11 @@ const MaterialChart = ({ data, className }: MaterialChartProps) => {
                 tickMargin={10}
                 axisLine={false}
               />
-              <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+              <ChartTooltip
+                cursor={false}
+                content={<ChartTooltipContent />}
+                formatter={(value) => ['Quantidade de produtos: ', ` ${value}`]}
+              />
               <Bar
                 dataKey="quantity"
                 fill="hsl(var(--primary))"
