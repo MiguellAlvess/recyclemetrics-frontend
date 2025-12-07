@@ -6,7 +6,10 @@ import type {
 } from '@/forms/schemas/disposal'
 
 import { DisposalService } from '../services/disposal/disposal'
-import type { CreateDisposalResponse } from '../services/disposal/types'
+import type {
+  CreateDisposalResponse,
+  GetMostUsedDestinationResponse,
+} from '../services/disposal/types'
 
 export const useCreateDisposal = () => {
   const queryClient = useQueryClient()
@@ -49,5 +52,12 @@ export const useGetDisposals = () => {
   return useQuery<CreateDisposalResponse[]>({
     queryKey: ['disposals'],
     queryFn: () => DisposalService.getAll(),
+  })
+}
+
+export const useGetMostUsedDestination = () => {
+  return useQuery<GetMostUsedDestinationResponse>({
+    queryKey: ['dashboard', 'mostUsedDestination'],
+    queryFn: () => DisposalService.getMostUsedDestination(),
   })
 }

@@ -1,3 +1,4 @@
+import { useGetMostUsedDestination } from '@/api/hooks/disposal'
 import {
   PageContainer,
   PageContent,
@@ -9,6 +10,7 @@ import {
 import StatsCards from '@/components/stats-card'
 
 const DashboardPage = () => {
+  const { data: mostUsedDestination } = useGetMostUsedDestination()
   return (
     <PageContainer>
       <PageHeader>
@@ -24,7 +26,7 @@ const DashboardPage = () => {
           totalDisposals={10}
           recyclingPercentage={15}
           totalPurchase={10}
-          mostUsedDestination="Reciclagem"
+          mostUsedDestination={mostUsedDestination?.destination || 'N/A'}
         />
       </PageContent>
     </PageContainer>

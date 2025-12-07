@@ -24,4 +24,9 @@ export type UpdateDisposalInput = {
   disposalDate: Date
 }
 
+export type GetMostUsedDestinationResponse = {
+  destination: string
+  quantity: number
+}
+
 export type UpdateDisposalResponse = CreateDisposalResponse
