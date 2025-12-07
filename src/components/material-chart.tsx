@@ -15,7 +15,9 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart'
-export const description = 'A bar chart'
+
+export const description =
+  'Bar chart comparando os tipos de materiais das compras nos últimos 30 dias'
 
 type MaterialChartData = {
   materialLabel: string
@@ -24,8 +26,8 @@ type MaterialChartData = {
 
 const chartConfig = {
   quantity: {
-    label: 'Quantidade',
-    color: 'var(--chart-1)',
+    label: 'Quantidade de produtos',
+    color: 'hsl(var(--primary))',
   },
 } satisfies ChartConfig
 
@@ -38,8 +40,11 @@ const MaterialChart = ({ data }: MaterialChartProps) => {
     <Card>
       <CardHeader>
         <CardTitle>Tipos de materiais</CardTitle>
-        <CardDescription>Últimos 30 dias</CardDescription>
+        <CardDescription>
+          Comparativo dos materiais das compras dos últimos 30 dias
+        </CardDescription>
       </CardHeader>
+
       <CardContent>
         <ChartContainer config={chartConfig}>
           <BarChart accessibilityLayer data={data}>
@@ -51,16 +56,24 @@ const MaterialChart = ({ data }: MaterialChartProps) => {
               axisLine={false}
             />
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-            <Bar dataKey="quantity" fill="var(--color-quantity)" radius={8} />
+            <Bar
+              dataKey="quantity"
+              fill="hsl(var(--primary))"
+              radius={8}
+              className="transition-all hover:opacity-80"
+            />
           </BarChart>
         </ChartContainer>
       </CardContent>
+
       <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+        <div className="flex items-center gap-2 font-medium leading-none">
+          Panorama dos materiais comprados
+          <TrendingUp className="h-4 w-4 text-primary" />
         </div>
         <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
+          Quantidade de produtos por tipo de material nas compras registradas
+          nos últimos 30 dias.
         </div>
       </CardFooter>
     </Card>
