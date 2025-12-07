@@ -1,34 +1,36 @@
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Separator } from '@/components/ui/separator'
+import UpdateUserForm from '@/components/update-user-form'
 import { useAuthContext } from '@/context/auth'
 
 const ProfilePage = () => {
   const { user } = useAuthContext()
+  if (!user) return null
+
+  const initials =
+    user.name
+      ?.split(' ')
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((n) => n[0].toUpperCase())
+      .join('') || 'US'
+
   return (
-    <h1>
-      <section className="flex flex-col items-center justify-start space-y-4 p-8">
-        <Card className="w-[40vw]">
-          <CardHeader className="flex flex-col items-start justify-start gap-1">
-            <CardTitle>Informações pessoais</CardTitle>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-8">
-            <Avatar>
-              <AvatarFallback>
-                {user?.name
-                  ?.split(' ')
-                  .map((n) => n[0])
-                  .join('')
-                  .slice(0, 2)
-                  .toUpperCase() || 'US'}
-              </AvatarFallback>
-            </Avatar>
-            <Separator />
-            <h1>Formulário</h1>
-          </CardContent>
-        </Card>
-      </section>
-    </h1>
+    <section className="flex w-full justify-center px-4 py-8">
+      <Card className="w-full max-w-md">
+        <CardHeader className="flex flex-col items-center gap-3">
+          <Avatar className="h-12 w-12 text-sm">
+            <AvatarFallback className="bg-primary/10 font-semibold text-primary">
+              {initials}
+            </AvatarFallback>
+          </Avatar>
+          <CardTitle>Informações pessoais</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <UpdateUserForm user={user} />
+        </CardContent>
+      </Card>
+    </section>
   )
 }
 
