@@ -1,4 +1,6 @@
 import { useGetMostUsedDestination } from '@/api/hooks/disposal'
+import { useGetMaterialMetrics } from '@/api/hooks/purchase'
+import MaterialChart from '@/components/material-chart'
 import {
   PageContainer,
   PageContent,
@@ -11,6 +13,7 @@ import StatsCards from '@/components/stats-card'
 
 const DashboardPage = () => {
   const { data: mostUsedDestination } = useGetMostUsedDestination()
+  const { data: materialMetrics = [] } = useGetMaterialMetrics()
   return (
     <PageContainer>
       <PageHeader>
@@ -23,11 +26,14 @@ const DashboardPage = () => {
       </PageHeader>
       <PageContent>
         <StatsCards
-          totalDisposals={10}
+          totalDisposals={mostUsedDestination?.quantity || 0}
           recyclingPercentage={15}
           totalPurchase={10}
           mostUsedDestination={mostUsedDestination?.destination || 'N/A'}
         />
+        <div className="grid grid-cols-[2.25fr_1fr]">
+          <MaterialChart data={materialMetrics} />
+        </div>
       </PageContent>
     </PageContainer>
   )
