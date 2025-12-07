@@ -34,7 +34,7 @@ export const PurchaseService = {
   },
   getMaterialMetrics: async (): Promise<MaterialChartData[]> => {
     const response = await protectedApi.get<MaterialSummaryResponse>(
-      '/purchases/metrics/purchases-material-summary'
+      '/purchases/purchases-material-summary-30-days'
     )
     const summary = response.data.materialAmountSummary
     return Object.entries(summary).map(([materialLabel, quantity]) => ({
