@@ -16,6 +16,7 @@ import NotFoundPage from './pages/notfound'
 import ProfilePage from './pages/profile'
 import PurchasesPage from './pages/purchases'
 import SignupPage from './pages/signup'
+import VirtualAssistantPage from './pages/virtual-assistant'
 import { PrivateRoute } from './routes/private-routes'
 
 const queryClient = new QueryClient()
@@ -34,6 +35,10 @@ createRoot(document.getElementById('root')!).render(
                 <Route path="/disposals" element={<DisposalsPage />} />
                 <Route path="/purchases" element={<PurchasesPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
+                <Route
+                  path="/virtual-assistant"
+                  element={<VirtualAssistantPage />}
+                />
               </Route>
             </Route>
 
