@@ -2,23 +2,25 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
 import { usePrompt } from '@/api/hooks/virtual-assistant'
+import type { PromptResponse } from '@/api/services/virtual-assistant/types'
 
 import {
   type AddPromptSchema,
   addPromptSchema,
 } from '../schemas/virtual-assistant'
 
-type AddPurchaseFormParams = {
-  onSuccess?: () => void
+type AddPromptFormParams = {
+  onSuccess?: (userMessage: string, response: PromptResponse) => void
   onError?: () => void
 }
 
 export const usePromptVirtualAssistant = ({
   onSuccess,
   onError,
-}: AddPurchaseFormParams) => {
+}: AddPromptFormParams) => {
   const { mutateAsync: addPrompt } = usePrompt()
-  const form = useForm({
+
+  const form = useForm<AddPromptSchema>({
     resolver: zodResolver(addPromptSchema),
     defaultValues: {
       message: '',
@@ -28,8 +30,9 @@ export const usePromptVirtualAssistant = ({
 
   const handleSubmit = async (data: AddPromptSchema) => {
     try {
-      await addPrompt(data)
-      onSuccess?.()
+      const userMessage = data.message
+      const response = await addPrompt(data)
+      onSuccess?.(userMessage, response)
     } catch (error) {
       console.error(error)
       onError?.()
