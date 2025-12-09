@@ -68,7 +68,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
       setUser(createdUser.user)
     } catch (error) {
       console.error(error)
-      toast.error('Erro ao realizar login')
+      toast.error('Erro ao criar conta')
       removeAccessToken()
     }
   }
