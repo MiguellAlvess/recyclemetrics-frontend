@@ -63,11 +63,14 @@ const AppSidebar = () => {
   return (
     <Sidebar>
       <SidebarHeader className="border-b p-4">
-        <img
-          src={logo}
-          alt="Reciclagem"
-          className="h-full w-full object-cover"
-        />
+        <div className="flex items-center gap-2">
+          <img src={logo} alt="RecycleMetrics" className="h-8 w-8" />
+
+          <h3 className="text-xl font-bold leading-none text-black">
+            Recycle
+            <span className="text-xl font-bold text-primary">Metrics</span>
+          </h3>
+        </div>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
