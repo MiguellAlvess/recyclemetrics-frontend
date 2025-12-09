@@ -46,4 +46,8 @@ export type GetPercentageRecycledItemsDisposalsResponse = {
   percentageDisposalRecycled: number
 }
 
+export type GetMostDescartedMaterialResponse = {
+  mostDiscardedMaterial: string
+}
+
 export type UpdateDisposalResponse = CreateDisposalResponse
