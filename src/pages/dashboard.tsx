@@ -1,6 +1,6 @@
 import {
   useGetDestinationMetrics,
-  useGetMostUsedDestination,
+  useGetMostDescartedMaterial30Days,
   useGetPercentageRecycledItemsDisposals30Days,
   useGetTotalDisposals30Days,
 } from '@/api/hooks/disposal'
@@ -21,13 +21,14 @@ import {
 import StatsCards from '@/components/stats-card'
 
 const DashboardPage = () => {
-  const { data: mostUsedDestination } = useGetMostUsedDestination()
   const { data: materialMetrics = [] } = useGetMaterialMetrics()
   const { data: destinationMetrics = [] } = useGetDestinationMetrics()
   const { data: totalDisposals30Days } = useGetTotalDisposals30Days()
   const { data: totalPurchases30Days } = useGetTotalPurchases30Days()
   const { data: percentageRecycledItems30Days } =
     useGetPercentageRecycledItemsDisposals30Days()
+  const { data: mostDescartedMaterial30Days } =
+    useGetMostDescartedMaterial30Days()
   return (
     <PageContainer>
       <PageHeader>
@@ -49,7 +50,9 @@ const DashboardPage = () => {
           recyclingPercentage30Days={
             percentageRecycledItems30Days?.percentageDisposalRecycled || 0
           }
-          mostUsedDestination30Days={mostUsedDestination?.destination || 'N/A'}
+          mostDescartedMaterial30Days={
+            mostDescartedMaterial30Days?.mostDiscardedMaterial || ''
+          }
         />
         <div className="grid grid-cols-[2.25fr_1.5fr] items-start gap-5">
           <MaterialChart data={materialMetrics} />

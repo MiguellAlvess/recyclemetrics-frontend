@@ -6,14 +6,14 @@ interface StatsCardsProps {
   totalDisposals30Days: number | undefined
   totalPurchase30Days: number | undefined
   recyclingPercentage30Days: number | undefined
-  mostUsedDestination30Days: string | undefined
+  mostDescartedMaterial30Days: string | undefined
 }
 
 const StatsCards = ({
   totalPurchase30Days,
   totalDisposals30Days,
   recyclingPercentage30Days,
-  mostUsedDestination30Days,
+  mostDescartedMaterial30Days,
 }: StatsCardsProps) => {
   const stats = [
     {
@@ -32,8 +32,8 @@ const StatsCards = ({
       icon: Recycle,
     },
     {
-      title: 'Destino mais usado',
-      value: mostUsedDestination30Days,
+      title: 'Material mais descartado',
+      value: mostDescartedMaterial30Days,
       icon: MapPinHouse,
     },
   ]
