@@ -43,7 +43,7 @@ export const DisposalService = {
   },
   getDestinationMetrics: async (): Promise<DestinationChartData[]> => {
     const response = await protectedApi.get<DestinationSummaryResponse>(
-      '/disposals/disposals-destination-summary-30-days'
+      '/disposals/dashboard/disposals-destination-summary-30-days'
     )
     const summary = response.data.destinationAmountSummary
     return Object.entries(summary).map(([destinationLabel, quantity]) => ({
@@ -54,21 +54,21 @@ export const DisposalService = {
   getTotalDisposals30Days:
     async (): Promise<GetTotalDisposals30DaysResponse> => {
       const response = await protectedApi.get(
-        '/disposals/total-itens-disposed-30-days'
+        '/disposals/dashboard/total-itens-disposed-30-days'
       )
       return response.data
     },
   getPercentageRecycledItemsDisposals30Days:
     async (): Promise<GetPercentageRecycledItemsDisposalsResponse> => {
       const response = await protectedApi.get(
-        '/disposals/percentage-disposals-items-30-days'
+        '/disposals/dashboard/percentage-disposals-items-30-days'
       )
       return response.data
     },
   getMostDescartedMaterial30Days:
     async (): Promise<GetMostDescartedMaterialResponse> => {
       const response = await protectedApi.get(
-        '/disposals/disposals-most-discarded-material'
+        '/disposals/dashboard/disposals-most-discarded-material'
       )
       return response.data
     },
