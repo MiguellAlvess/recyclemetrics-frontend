@@ -17,12 +17,12 @@ const StatsCards = ({
 }: StatsCardsProps) => {
   const stats = [
     {
-      title: 'Total de compras',
+      title: 'Produtos comprados',
       value: totalPurchase30Days,
       icon: ShoppingBasket,
     },
     {
-      title: 'Total de descartes',
+      title: 'Produtos descartados',
       value: totalDisposals30Days,
       icon: Archive,
     },
