@@ -54,10 +54,10 @@ const EditPurchaseButton = ({ purchase }: EditPurchaseButtonProps) => {
     purchase,
     onSuccess: () => {
       setSheetIsOpen(false)
-      toast.success('Descarte atualizado com sucesso')
+      toast.success('Compra atualizada com sucesso')
     },
     onError: () => {
-      toast.error('Erro ao atualizar o descarte')
+      toast.error('Erro ao atualizar o compra')
     },
   })
   return (
