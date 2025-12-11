@@ -72,7 +72,14 @@ const DestinationChart = ({ data, className }: DestinationChartProps) => {
                 width={90}
                 tick={{ fontSize: 12 }}
               />
-              <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+              <ChartTooltip
+                cursor={false}
+                content={<ChartTooltipContent />}
+                formatter={(value) => [
+                  'Quantidade de descartes: ',
+                  ` ${value}`,
+                ]}
+              />
               <Bar
                 dataKey="quantity"
                 fill="hsl(var(--primary))"
