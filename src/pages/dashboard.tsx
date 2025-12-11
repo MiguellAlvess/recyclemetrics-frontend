@@ -54,7 +54,7 @@ const DashboardPage = () => {
             mostDescartedMaterial30Days?.mostDiscardedMaterial || ''
           }
         />
-        <div className="grid grid-cols-[2.25fr_1.5fr] items-start gap-5">
+        <div className="grid grid-cols-1 items-start gap-5 lg:grid-cols-[2.25fr_1.5fr]">
           <MaterialChart data={materialMetrics} />
           <DestinationChart data={destinationMetrics} />
         </div>
