@@ -34,7 +34,7 @@ const SignupPage = () => {
 
   if (isInitializing) return null
   if (user) {
-    return <Navigate to="/dashboard" />
+    return <Navigate to="/" />
   }
 
   return (

@@ -33,7 +33,7 @@ const LoginPage = () => {
   }
   if (isInitializing) return null
   if (user) {
-    return <Navigate to="/dashboard" />
+    return <Navigate to="/" />
   }
   return (
     <div className="flex min-h-screen w-full">
