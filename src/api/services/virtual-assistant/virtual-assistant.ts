@@ -4,7 +4,7 @@ import type { PromptInput, PromptResponse } from './types'
 
 export const VirtualAssistantService = {
   prompt: async (input: PromptInput): Promise<PromptResponse> => {
-    const response = await protectedApi.post('/virtual-assistant/prompt', input)
+    const response = await protectedApi.post('/virtual-assistant', input)
     return response.data
   },
 }
