@@ -30,7 +30,7 @@ createRoot(document.getElementById('root')!).render(
             <Route path="/sign-up" element={<SignupPage />} />
             <Route element={<PrivateRoute />}>
               <Route element={<AppLayout />}>
-                <Route path="/dashboard" element={<DashboardPage />} />
+                <Route path="/" element={<DashboardPage />} />
                 <Route path="/disposals" element={<DisposalsPage />} />
                 <Route path="/purchases" element={<PurchasesPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
