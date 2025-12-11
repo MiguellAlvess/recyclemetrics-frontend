@@ -9,7 +9,8 @@ import simpleImportSort from 'eslint-plugin-simple-import-sort'
 import eslintConfigPrettier from 'eslint-config-prettier'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(['dist', 'build', 'node_modules', 'src/components/ui/**/*']),
+
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
@@ -32,5 +33,6 @@ export default defineConfig([
       'react-hooks/incompatible-library': 'off',
     },
   },
+
   eslintConfigPrettier,
 ])
